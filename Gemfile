@@ -12,10 +12,15 @@ gem 'spring',        group: :development
 gem 'bootstrap-sass'
 gem 'devise'
 gem 'pg'
-gem 'simple_form'
+#gem 'rails-api'
+gem 'paperclip', '~> 4.1'
+
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
   gem 'quiet_assets'
   gem 'rails_layout'
+  gem 'binding_of_caller'
+
 end

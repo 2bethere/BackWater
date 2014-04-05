@@ -11,10 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140325055727) do
+ActiveRecord::Schema.define(version: 20140401031332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "images", force: true do |t|
+    t.integer  "post_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+  end
+
+  create_table "posts", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "post_content"
+    t.integer  "user_id"
+    t.integer  "test_result_arsenic"
+    t.integer  "test_result_cholera"
+    t.integer  "test_result_coliform"
+    t.integer  "test_result_nitrite"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -30,6 +51,7 @@ ActiveRecord::Schema.define(version: 20140325055727) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.string   "authentication_token"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

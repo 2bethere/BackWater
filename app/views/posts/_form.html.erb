@@ -1,0 +1,29 @@
+<%= form_for @post, :url => posts_path,:html => { :multipart => true } do |f| %>
+    <% if @post.errors.any? %>
+        <div id="errorExplanation">
+          <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+          <ul>
+            <% @post.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <%= f.text_area :post_content%>
+    
+
+    Images:
+    <% @post.images.each do |image| %>
+        <%= image_tag image.file.url %>
+    <% end %>
+
+    <%= f.fields_for :images do |i| %>
+        <% if i.object.new_record? %>
+            <%= i.file_field :file , :multiple => true%>
+        <% end %>
+    <% end %>
+
+
+    <%= f.button :submit %>
+<% end %>S

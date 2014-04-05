@@ -1,0 +1,25 @@
+<h1>Listing images</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% if @images %>
+        <% @images.each do |image| %>
+          <tr>
+            <td><%= link_to 'Show', post_image_path(image.post,image ) %></td>
+            <td><%= link_to 'Edit', edit_post_image_path(image.post, image) %></td>
+            <td><%= link_to 'Destroy',[image.post, image] , method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Image', new_post_image_path %>
