@@ -42,8 +42,12 @@ class PostsController < ApplicationController
     # Save all images
     @post = Post.new
     @post.post_content = post_params[:post_content]
+    @post.test_result_arsenic = post_params[:test_result_arsenic]
+    @post.test_result_cholera_o1 = post_params[:test_result_cholera_o1]
+    @post.test_result_cholera_o139 = post_params[:test_result_cholera_o139]
+    @post.test_result_coliform = post_params[:test_result_coliform]
+    @post.test_result_nitrite = post_params[:test_result_nitrite]
     @post.user = current_user
-
     respond_to do |format|
       if @post.save
         if(post_params[:images_attributes])
@@ -97,6 +101,8 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:post_content, images_attributes: [:file => []] )
+      params.require(:post).permit(:post_content, :test_result_cholera_o1, :test_result_cholera_o139,
+                                   :test_result_nitrite, :test_result_coliform, :test_result_arsenic,
+                                   images_attributes: [:file => []] )
     end
 end

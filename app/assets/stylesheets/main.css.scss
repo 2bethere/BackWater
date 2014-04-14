@@ -1,13 +1,5 @@
-$font-stack:    sans-serif;
-$primary-color: #0038A8;
-
-header {
-	height: 50px;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  z-index: 1001;
-}
+$font-stack: sans-serif;
+$primary-color: #2233FF;
 
 main {
   width: 100%;
@@ -17,8 +9,8 @@ main {
 }
 
 html {
-	height: 100%;
-	overflow: hidden;
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -30,42 +22,276 @@ body {
 }
 
 nav {
-  margin-left: auto;
-  margin-right: auto;
   height: 50px;
-  min-width: 1024px;
+  width: 100%;
+  position: fixed;
+  padding: 0px;
+  top: 0px;
+  left: 0px;
+  z-index: 1001;
 }
 
-#map-canvas { 
-    height: 100%;
-    margin-left: 0px;
-    padding: 0px;
+#logo {
+  margin-left: 10px;
+  margin-top: 10px;
+  float: left;
+}
+
+.navmid{
+  width: 1024px;
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+}
+.navfloat {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  height: 30px;
+  padding: 12px;
+  font-size: 16pt;
+  background-color: rgba(255,255,255,0.8);
+}
+.navfloat a{
+  text-decoration: none;
+  color: $primary-color;
+
+}
+
+#map-canvas {
+  height: 100%;
+  margin-left: 0px;
+  padding: 0px;
 }
 
 #boxoverlay {
   width: 600px;
-  height: 800px;
+  height: 700px;
   position: fixed;
-  top: 50px;
-  left: 100px;
-  background-color: #FFF;
+  top: 0px;
+  left: 0px;
+  background-color: rgba(255,255,255,0.9);
   z-index: 200;
+  display: none;
+  overflow: scroll;
+  box-shadow: 4px 4px 4px #888888;
+}
+
+.postwrapper {
+  height: 700px;
 }
 
 #crossoverlay {
-   background-image: image-url("cross.png");
-   position: fixed;
-   width: 100%;
-   height: 100%;
-   top: 0px;
-   left: 0px;
-   margin: 0px;
-   z-index: 100;
-  pointer-events:none;
-   opacity:0.1;
+  background-image: image-url("cross.png");
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  margin: 0px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.1;
 }
 
-.mainnav li {
-    color: $primary-color;
-    font-size: 16pt;
+.navmid li {
+  color: $primary-color;
+  font-size: 16pt;
+  list-style-type: none;
+  width: 300px;
+  height: 40px;
+  padding-top: 16px;
+  float: left;
+  text-align: center;
+  background-color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.navmid li:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+
+.navmid li a {
+  color: $primary-color;
+  text-decoration: none;
+}
+
+.title {
+  color: $primary-color;
+  font-size: 12pt;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.sectiontitle {
+  margin: 10px 0px;
+  background-color: #AAA;
+  color: #FFF;
+  padding: 10px;
+  height: 20px;
+  font-size: 14pt;
+  font-weight: bold;
+  clear:both;
+}
+
+.sectionwrapper{
+  margin: 10px 20px;
+  clear:both;
+}
+
+.inputwrapper textarea{
+  width: 98%;
+  min-height: 120px;
+  font-size: 12pt;
+  resize: vertical;
+  border: 1px solid $primary-color;
+}
+
+.new_post input[type="submit"] {
+  font-size: 16pt;
+  width:120px;
+  background-color: #FFF;
+  border: 2px solid $primary-color;
+  color: $primary-color;
+  cursor: pointer;
+}
+
+.mid {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submitwrapper {
+  width: 120px;
+}
+
+.errorbox {
+  border: 1px solid #B00100;
+  background-color: #FEE;
+}
+
+.testresultbox {
+  width: 180px;
+  margin-left: 50px;
+  margin-right: 50px;
+  height: 240px;
+  float: left;
+}
+
+.testtitleimg {
+  width: 60px;
+  height: 60px;
+}
+
+#o1group {
+  float: left;
+  width: 90px;
+}
+
+#o1group div {
+  vertical-align: middle;
+  height: 40px;
+  width: 80px;
+  background-color: #EEE;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#o1group input{
+  margin-top: 12px;
+}
+
+#o139group {
+  width: 90px;
+  float: right;
+}
+
+#o139group div {
+  vertical-align: middle;
+  height: 40px;
+  width: 80px;
+  background-color: #EEE;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#o139group input{
+  margin-top: 12px;
+}
+
+.choicebox {
+  height: 23px;
+}
+
+.choicebox input{
+  margin-top: 6px;
+}
+
+#nitrite6 {
+  background-color: #CE529E;
+}
+#nitrite5 {
+  background-color: #DD85B7;
+}
+#nitrite4 {
+  background-color: #E7AACD;
+}
+#nitrite3 {
+  background-color: #F5CADF;
+}
+#nitrite2 {
+  background-color: #F4DEE8;
+}
+#nitrite1 {
+  background-color: #F2E6EC;
+}
+
+
+
+.coliformbox {
+  height: 46px;
+}
+
+.coliformbox input{
+  margin-top: 16px;
+}
+
+#coliformblue {
+  background-color: #47C4BE;
+}
+
+#coliformyellow {
+  background-color: #F7EE7F;
+}
+
+#coliformnone {
+  background-color: #BBBDBF;
+}
+
+
+#arsenic6 {
+  background-color: #793B2C;
+}
+#arsenic5 {
+  background-color: #CD6632;
+}
+#arsenic4 {
+  background-color: #E8942A;
+}
+#arsenic3 {
+  background-color: #EABD24;
+}
+#arsenic2 {
+  background-color: #EED772;
+}
+#arsenic1 {
+  background-color: #F3EAAD;
+}
+
+.choicegroup {
+  margin-top: 12px;
 }

@@ -32,7 +32,8 @@ ActiveRecord::Schema.define(version: 20140401031332) do
     t.text     "post_content"
     t.integer  "user_id"
     t.integer  "test_result_arsenic"
-    t.integer  "test_result_cholera"
+    t.integer  "test_result_cholera_o1"
+    t.integer  "test_result_cholera_o139"
     t.integer  "test_result_coliform"
     t.integer  "test_result_nitrite"
   end

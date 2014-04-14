@@ -14,19 +14,24 @@ class ApplicationController < ActionController::Base
   protected
 
 
-
   def set_csrf_header
     response.headers['X-CSRF-Token'] = form_authenticity_token
   end
 
   def after_sign_in_path_for(resource)
-    stored_location_for(resource) ||
-        if resource.is_a?(User) && params[:json_signin].presence
-          '/users.json'
-        else
-          super
-        end
+    sign_in_url = url_for(:action => 'new', :controller => 'sessions', :only_path => false, :protocol => 'http')
+    if request.referer == sign_in_url
+      super
+    else
+      stored_location_for(resource) ||
+          if resource.is_a?(User) && params[:json_signin].presence
+            '/users.json'
+          else
+            stored_location_for(resource) || request.referer || root_path
+          end
+    end
   end
+
 
   private
 
@@ -45,6 +50,8 @@ class ApplicationController < ActionController::Base
       sign_in user, store: false
     end
   end
+
+
 
 end
 

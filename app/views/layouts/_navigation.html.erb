@@ -1,8 +1,14 @@
 <%# navigation styled for Bootstrap 3.0 %>
 <nav>
-    <div class="navmid">
-      <ul class="nav navbar-nav mainnav">
-        <%= render 'layouts/navigation_links' %>
-      </ul>
-    </div>
+  <%= image_tag("logo.png", :alt => "home image", :title => "Click here to return to Home", :id => "logo") %>
+  <ul class="navmid">
+    <%= render 'layouts/navigation_links' %>
+  </ul>
+  <div class="navfloat">
+    <% if user_signed_in? %>
+        <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
+    <% else %>
+        <%= link_to 'Login', new_user_session_path %>
+    <% end %>
+  </div>
 </nav>

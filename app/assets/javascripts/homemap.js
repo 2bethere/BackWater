@@ -10,124 +10,65 @@ bwConfig.yResolution = 40;
 
 var bgStore = new Object();
 
-//
-function drawBackground(){
-	var svg = d3.select("svg");
-	//
-	var c = 0;
-	var dataset = new Array();
-	windowWidth = w.innerWidth || e.clientWidth || g.clientWidth;
-    windowHeight = w.innerHeight|| e.clientHeight|| g.clientHeight;
-
-	for(y = 0; y < bwConfig.yResolution; y++)
-	{
-		for(x = 0; x < bwConfig.xResolution; x++)
-		{
-			dataset[c] = Math.random() < 0.5;
-			c++;
-		}
-	}
-	//
-	bgStore.e = svg.selectAll("path")
-    .data(dataset)
-    .enter()
-    .append("path");
-    var space = Math.round(windowWidth / bwConfig.xResolution) ;
-    bgStore.e.attr("transform", function(d, i) { 
-    	return "translate(" + ((i % bwConfig.xResolution) * space ) + "," + (Math.floor(i / bwConfig.xResolution) * space + 20) + ")"; 
-    })
-    .attr("d", d3.svg.symbol().type("cross").size(64))
-    .attr("type", "cross")
-    .attr("fill", function(d, i) {
-				   		if (d)
-				   		{
-				   			return "#0038A8";
-				   		}else{
-				   			return "#EEEEEE";
-				   		}
-				   })
-    .attr("opacity", 0)
-    ;
-  	var transition = svg.transition().duration(1000),
-        delay = function(d, i) { return i ; };
-
-    transition.selectAll("path")
-        .delay(delay)
-        .attr("opacity", 100)
-        .attr("transform", function(d, i) { 
-    		return "translate(" + ((i % bwConfig.xResolution) * space ) + "," + (Math.floor(i / bwConfig.xResolution) * space + 20) + ")"; 
-    	});
-
-    svg.on("click", function(){
-    	var dataset = new Array();
-    	var svg = d3.select("svg");
-	
-		for(y = 0; y < bwConfig.yResolution; y++)
-		{
-			for(x = 0; x < bwConfig.xResolution; x++)
-			{
-				dataset[c] = Math.random() < 0.5;
-				c++;
-			}
-		}
-
-		svg.selectAll("path")
-	    .data(dataset)
-	    .enter()
-		 attr("fill", function(d, i) {
-				   		if (d)
-				   		{
-				   			return "#0038A8";
-				   		}else{
-				   			return "#EEEEEE";
-				   		}
-				   });
-		 console.log("Updated");
-	});
-
-/*
-
-	svg.on("mousemove", function(){
-		 bgStore.e.attr("transform", function(d, i) { 
-    			//return "scale("+  +","+ +")"
-    		});
-	});
-
-	  
-    
-    bgStore.e.attr("cx", function(d, i) {
-						return ((i % 30) * space + 20);
-					})
-				   .attr("cy",  function(d, i) {
-				   		return ( Math.floor(i / 30) * space + 20);
-				   })
-				   .attr("r", 10)
-				   .attr("fill", function(d, i) {
-				   		if (d)
-				   		{
-				   			return "#0038A8";
-				   		}else{
-				   			return "#EEEEEE";
-				   		}
-				   });
-		*/
-}
+/* Main stage program starts here */
+var url;
 
 $( document ).ready(function() {
-   
-    //var svg = d3.select("svg");
-
     updateWindow();
- 	$(".mainnav li").click(function(event){
-
-    	event.preventDefault();
-
-		$("#boxoverlay").load(event.target.href); 
-
-    	return false; //for good measure
-	});
-    //drawBackground();
+    setupNavLinkClick();
+    setupFormsAndLinks();
+    setupScroll();
 });
+
+function setupScroll(){
+    if (document.addEventListener) {
+        document.addEventListener("mousewheel", MouseWheelHandler, false); //IE9, Chrome, Safari, Oper
+        document.addEventListener("wheel", MouseWheelHandler, false); //Firefox
+    } else {
+        document.attachEvent("onmousewheel", MouseWheelHandler); //IE 6/7/8
+    }
+}
+
+function setupFormsAndLinks(){
+    $(document).on("click","#boxoverlay a[href]",function(e){
+        $("#boxoverlay").load(e.target.href);
+        return false;
+    });
+    $(document).on("submit", "#boxoverlay", function (e) {
+        console.log(e.target);
+        var $this = $(e.target);
+        $.post($this.attr('action'), $this.serialize(), function (data) {
+            $("#boxoverlay").html(data);
+        }, 'html');
+        return false;
+    });
+}
+
+function setupNavLinkClick(){
+    $(".navmid li").click(function(event){
+        event.preventDefault();
+        url = event.target.href;
+        if(!url){
+            url = $(event.target).children(":first")[0].href;
+        }
+        var $t = $(event.target);
+        var offset = $t.offset().left + ( $t.width() - $("#boxoverlay").width())/2 ;
+        console.log(offset);
+        // Hide if the box is visible
+        $("#boxoverlay").slideUp("fast");
+
+        $("#boxoverlay").offset({ top: 60, left: offset });
+        $.ajax( url )
+            .done(function(result) {
+                $("#boxoverlay").html(result);
+                $("#boxoverlay").slideDown("slow");
+            })
+            .fail(function(result) {
+                $("#boxoverlay").load("/users/sign_in");
+                $("#boxoverlay").slideDown("slow");
+            });
+    });
+}
 
 function updateWindow(){
     x = w.innerWidth || e.clientWidth || g.clientWidth;
@@ -135,4 +76,33 @@ function updateWindow(){
 	var svg = d3.select("svg");
     svg.attr("width", x).attr("height", y);
 }
+
+function MouseWheelHandler(e) {
+
+// cross-browser wheel delta
+        e = window.event || e;
+        var delta = Math.max(-1, Math.min(1,
+            (e.wheelDelta || -e.deltaY || -e.detail)));
+        var isMoving = false;
+        if (!isMoving) { //if theres any #
+            if (delta < 0) {
+                isMoving = true;
+                scrollPage("down");
+            }else{
+                isMoving = true;
+                scrollPage("up");
+            }
+        }
+        return false;
+}
+
+function scrollPage(direction){
+    if(direction == "up")
+    {
+
+    }else{
+
+    }
+}
+
 window.onresize = updateWindow;
