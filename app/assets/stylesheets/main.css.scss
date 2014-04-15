@@ -76,12 +76,12 @@ nav {
   background-color: rgba(255,255,255,0.9);
   z-index: 200;
   display: none;
-  overflow: scroll;
+  overflow: hidden;
   box-shadow: 4px 4px 4px #888888;
 }
 
 .postwrapper {
-  height: 700px;
+  height: 100%;
 }
 
 #crossoverlay {
@@ -294,4 +294,8 @@ nav {
 
 .choicegroup {
   margin-top: 12px;
+}
+
+.datacontainer {
+  
 }

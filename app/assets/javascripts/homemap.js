@@ -2,7 +2,8 @@ var w = window,
     d = document,
     e = d.documentElement,
     g = d.getElementsByTagName('body')[0];
-    
+
+var isMoving = false;
 
 var bwConfig = new Object();
 bwConfig.xResolution = 60;
@@ -17,8 +18,11 @@ $( document ).ready(function() {
     updateWindow();
     setupNavLinkClick();
     setupFormsAndLinks();
-    setupScroll();
+
+    //setupScroll();
+
 });
+
 
 function setupScroll(){
     if (document.addEventListener) {
@@ -31,7 +35,9 @@ function setupScroll(){
 
 function setupFormsAndLinks(){
     $(document).on("click","#boxoverlay a[href]",function(e){
-        $("#boxoverlay").load(e.target.href);
+        $("#boxoverlay").load(e.target.href, function(){
+            console.log("new page loaded");
+        });
         return false;
     });
     $(document).on("submit", "#boxoverlay", function (e) {
@@ -62,12 +68,25 @@ function setupNavLinkClick(){
             .done(function(result) {
                 $("#boxoverlay").html(result);
                 $("#boxoverlay").slideDown("slow");
+                console.log("new page loaded");
+                console.log($('#fullpage'));
+                $('#fullpage').fullpage(
+                    {verticalCentered:false,
+                        navigation:true,
+                        normalScrollElements: '#map-canvas',
+                        afterLoad: renderPostGraph
+                        });
             })
             .fail(function(result) {
                 $("#boxoverlay").load("/users/sign_in");
                 $("#boxoverlay").slideDown("slow");
             });
     });
+}
+
+function renderPostGraph(anchorLink, index) {
+    var target = $(".section")[index - 1];
+
 }
 
 function updateWindow(){
@@ -83,7 +102,6 @@ function MouseWheelHandler(e) {
         e = window.event || e;
         var delta = Math.max(-1, Math.min(1,
             (e.wheelDelta || -e.deltaY || -e.detail)));
-        var isMoving = false;
         if (!isMoving) { //if theres any #
             if (delta < 0) {
                 isMoving = true;

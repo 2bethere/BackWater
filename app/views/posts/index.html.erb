@@ -1,8 +1,18 @@
-<% @posts.each do |post| %>
-<div class="postwrapper">
-  <div class="sectiontitle">Title</div>
-  <div class="sectionwrapper"><%= post.post_content %></div>
-  <div class="sectiontitle">Data</div>
-  <div class="sectionwrapper"><%= post.test_result_cholera_o1 %></div>
+<div id="fullpage">
+  <% @posts.each do |post| %>
+      <div class="section">
+        <div class="postwrapper">
+          <div class="sectiontitle">Title</div>
+          <div class="sectionwrapper"><%= post.post_content %></div>
+          <div class="sectiontitle">Data</div>
+          <div class="sectionwrapper">
+            <div class="datacontainer" id="container_cholera_o1"><%= post.test_result_cholera_o1%></div>
+            <div class="datacontainer" id="container_cholera_o139"><%= post.test_result_cholera_o139 %></div>
+            <div class="datacontainer" id="container_nitrite"><%= post.test_result_nitrite %></div>
+            <div class="datacontainer" id="container_coliform"><%= post.test_result_coliform %></div>
+            <div class="datacontainer" id="container_arsenic"><%= post.test_result_arsenic %></div>
+          </div>
+        </div>
+      </div>
+  <% end %>
 </div>
-<% end %>
