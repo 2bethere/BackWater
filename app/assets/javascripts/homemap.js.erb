@@ -1,0 +1,405 @@
+var w = window,
+    d = document,
+    e = d.documentElement,
+    g = d.getElementsByTagName('body')[0];
+
+var isMoving = false;
+
+var bwConfig = new Object();
+bwConfig.xResolution = 60;
+bwConfig.yResolution = 40;
+
+var bgStore = new Object();
+
+/* Main stage program starts here */
+var url;
+
+$( document ).ready(function() {
+    updateWindow();
+    setupNavLinkClick();
+    setupFormsAndLinks();
+
+    //setupScroll();
+
+});
+
+
+function setupScroll(){
+    if (document.addEventListener) {
+        document.addEventListener("mousewheel", MouseWheelHandler, false); //IE9, Chrome, Safari, Oper
+        document.addEventListener("wheel", MouseWheelHandler, false); //Firefox
+    } else {
+        document.attachEvent("onmousewheel", MouseWheelHandler); //IE 6/7/8
+    }
+}
+
+function setupFormsAndLinks(){
+    $(document).on("click","#boxoverlay a[href]",function(e){
+        $("#boxoverlay").load(e.target.href, function(){
+            console.log("new page loaded");
+        });
+        return false;
+    });
+    $(document).on("submit", "#boxoverlay", function (e) {
+        var $this = $(e.target);
+        $.post($this.attr('action'), $this.serialize(), function (data) {
+            $("#boxoverlay").html(data);
+        }, 'html');
+        return false;
+    });
+}
+
+function setupNavLinkClick(){
+    $(".navmid li").click(function(event){
+        event.preventDefault();
+        url = event.target.href;
+        if(!url){
+            url = $(event.target).children(":first")[0].href;
+        }
+        var $t = $(event.target);
+        var offset = $t.offset().left + ( $t.width() - $("#boxoverlay").width())/2 ;
+
+        // Hide if the box is visible
+        $("#boxoverlay").slideUp("fast");
+
+        $("#boxoverlay").offset({ top: 60, left: offset });
+        $.ajax( url )
+            .done(function(result) {
+                $("#boxoverlay").html(result);
+                $("#boxoverlay").slideDown("slow");
+                console.log("new page loaded, applying fullpage scroll");
+                console.log($('#fullpage'));
+                $('#fullpage').fullpage(
+                    {verticalCentered:false,
+                        navigation:true,
+                        normalScrollElements: '#map-canvas, .scrollpanel',
+                        scrollOverflow: true,
+                        afterLoad: renderPostGraph,
+                        afterRender: renderPostGraph
+                        });
+                renderPostGraph(null, 0);
+            })
+            .fail(function(result) {
+                $("#boxoverlay").load("/users/sign_in");
+                $("#boxoverlay").slideDown("slow");
+            });
+    });
+}
+
+function renderPostGraph(anchorLink, index) {
+    console.log("Render graph");
+    var target = $(".section")[index - 1];
+    var data_element = $(target).find(".datacontainer").html();
+    if(!data_element) {
+        //Try finding the first one
+        data_element = $(".datacontainer").first().html();
+        console.log("Data_element:");
+        console.log(data_element);
+        if(!data_element) {
+            // return if still can't find anything.
+            return false;
+        }else{
+            target = $(".datacontainer").parent();
+        }
+    };
+    try{
+        var data = JSON.parse(data_element);
+        var svg_node = $(target).find("#grapharea");
+        $(svg_node).html("");
+        //init
+        var cScale = d3.scale.linear().domain([0, 360]).range([0, 2 * Math.PI]);
+
+        var vis = d3.select(svg_node[0]);
+
+        //cholera_o1
+        var plotData = new Array();
+        switch(data["cholera_o1"]){
+            case 2:
+                plotData.push({color: "#FF0000"});
+                break;
+            case 1:
+                plotData.push({color: "#00FF00"});
+                break;
+            default:
+                plotData.push({color: "#EEEEEE"});
+
+        }
+        switch(data["cholera_o139"]){
+            case 2:
+                plotData.push({color: "#FF0000"});
+                break;
+            case 1:
+                plotData.push({color: "#00FF00"});
+                break;
+            default:
+                plotData.push({color: "#EEEEEE"});
+
+        }
+        console.log("plot data");
+
+        var cholera_group = vis.append("g");
+
+        var arc = d3.svg.arc()
+            .innerRadius(60)
+            .outerRadius(80);
+
+        var pie = d3.layout.pie()
+                .startAngle(-120/180*Math.PI)
+                .endAngle(120/180*Math.PI)
+                .value(function() { return 1; });
+
+        var g = cholera_group.selectAll()
+                .data(pie(plotData))
+                .enter().append("g");
+        console.log(g);
+
+        g.append("path")
+                .style("fill", function(d) { return d.data.color; })
+                .attr("transform", "translate(140,140)")
+                .transition().delay(function(d, i) { return i * 2000; }).duration(2000)
+                .ease("linear")
+                .attrTween('d', function(d) {
+                    var i = d3.interpolate(d.startAngle+0, d.endAngle);
+                    return function(t) {
+                        d.endAngle = i(t);
+                        return arc(d);
+                    }
+                });
+
+        console.log("Append image");
+        cholera_group.selectAll("image")
+            .data([0])
+            .enter()
+            .append("image")
+            .attr("xlink:href", '<%= asset_path 'cholera.png' %>')
+            .attr("x", "110")
+            .attr("y", "140")
+            .attr("width", "60")
+            .attr("height", "60");
+
+        //nitrite
+        plotData = undefined;
+        plotData = new Array();
+        var count = data["nitrite"];
+        plotData.push({color:"#F1E5EA"});
+        if(count > 5) {
+            plotData.push({color:"#F3DDE7"});
+        }
+        if(count > 4) {
+            plotData.push({color:"#F4CADF"});
+        }
+        if(count > 3) {
+            plotData.push({color:"#E6AACD"});
+        }
+        if(count > 2) {
+            plotData.push({color:"#DC85B7"});
+        }
+
+        if(count > 1) {
+            plotData.push({color:"#CD539E"});
+        }
+
+
+        var end_angle = 20 * (count);
+
+        var nitrite_group = vis.append("g");
+
+        var arc = d3.svg.arc()
+                .innerRadius(60)
+                .outerRadius(80);
+
+        var pie = d3.layout.pie()
+                .startAngle(-120/180*Math.PI)
+                .endAngle(end_angle/180*Math.PI)
+                .value(function() { return 1; });
+
+        var g = nitrite_group.selectAll()
+                .data(pie(plotData))
+                .enter().append("g");
+
+        g.append("path")
+                .style("fill", function(d) { console.log(d); return d.data.color; })
+                .attr("transform", "translate(410,140)")
+                .transition().delay(function(d, i) { return i * 500; }).duration(500)
+                .ease("linear")
+                .attrTween('d', function(d) {
+                    var i = d3.interpolate(d.startAngle+0, d.endAngle);
+                    return function(t) {
+                        d.endAngle = i(t);
+                        return arc(d);
+                    }
+                });
+
+        console.log("Append image");
+        nitrite_group.selectAll("image")
+                .data([0])
+                .enter()
+                .append("image")
+                .attr("xlink:href", '<%= asset_path 'nitrite.png' %>')
+                .attr("x", "380")
+                .attr("y", "140")
+                .attr("width", "60")
+                .attr("height", "60");
+        //coliform
+        var plotData = new Array();
+        switch(data["coliform"]){
+            case 2:
+                plotData.push({color: "#F6ED7F"});
+                plotData.push({color: "#EEEEEE"});
+                break;
+            case 1:
+                plotData.push({color: "#EEEEEE"});
+                plotData.push({color: "#4CC1BC"});
+                break;
+            default:
+                plotData.push({color: "#EEEEEE"});
+                plotData.push({color: "#EEEEEE"});
+
+        }
+
+        console.log("plot data");
+
+        var coliform_group = vis.append("g");
+
+        var arc = d3.svg.arc()
+                .innerRadius(60)
+                .outerRadius(80);
+
+        var pie = d3.layout.pie()
+                .startAngle(-120/180*Math.PI)
+                .endAngle(120/180*Math.PI)
+                .value(function() { return 1; });
+
+        var g = cholera_group.selectAll()
+                .data(pie(plotData))
+                .enter().append("g");
+        console.log(g);
+
+        g.append("path")
+                .style("fill", function(d) { return d.data.color; })
+                .attr("transform", "translate(140,340)")
+                .transition().delay(function(d, i) { return i * 2000; }).duration(2000)
+                .ease("linear")
+                .attrTween('d', function(d) {
+                    var i = d3.interpolate(d.startAngle+0, d.endAngle);
+                    return function(t) {
+                        d.endAngle = i(t);
+                        return arc(d);
+                    }
+                });
+
+        console.log("Append image");
+        coliform_group.selectAll("image")
+                .data([0])
+                .enter()
+                .append("image")
+                .attr("xlink:href", '<%= asset_path 'coliform.png' %>')
+                .attr("x", "110")
+                .attr("y", "340")
+                .attr("width", "60")
+                .attr("height", "60");
+
+        //arsenic
+        plotData = undefined;
+        plotData = new Array();
+        var count = data["arsenic"];
+        plotData.push({color:"#F2E9AC"});
+        if(count > 5) {
+            plotData.push({color:"#EED772"});
+        }
+        if(count > 4) {
+            plotData.push({color:"#E8BC22"});
+        }
+        if(count > 3) {
+            plotData.push({color:"#E89427"});
+        }
+        if(count > 2) {
+            plotData.push({color:"#CD6631"});
+        }
+
+        if(count > 1) {
+            plotData.push({color:"#793C2C"});
+        }
+
+
+        var end_angle = 20 * (count);
+
+        var arsenic_group = vis.append("g");
+
+        var arc = d3.svg.arc()
+                .innerRadius(60)
+                .outerRadius(80);
+
+        var pie = d3.layout.pie()
+                .startAngle(-120/180*Math.PI)
+                .endAngle(end_angle/180*Math.PI)
+                .value(function() { return 1; });
+
+        var g = nitrite_group.selectAll()
+                .data(pie(plotData))
+                .enter().append("g");
+
+        g.append("path")
+                .style("fill", function(d) { console.log(d); return d.data.color; })
+                .attr("transform", "translate(410,340)")
+                .transition().delay(function(d, i) { return i * 500; }).duration(500)
+                .ease("linear")
+                .attrTween('d', function(d) {
+                    var i = d3.interpolate(d.startAngle+0, d.endAngle);
+                    return function(t) {
+                        d.endAngle = i(t);
+                        return arc(d);
+                    }
+                });
+
+        console.log("Append image");
+        arsenic_group.selectAll("image")
+                .data([0])
+                .enter()
+                .append("image")
+                .attr("xlink:href", '<%= asset_path 'arsenic.png' %>')
+                .attr("x", "380")
+                .attr("y", "340")
+                .attr("width", "60")
+                .attr("height", "60");
+        console.log(data);
+    }catch(err){
+        console.log(err);
+    }
+}
+
+function updateWindow(){
+    x = w.innerWidth || e.clientWidth || g.clientWidth;
+    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+	var svg = d3.select("svg");
+    svg.attr("width", x).attr("height", y);
+}
+
+function MouseWheelHandler(e) {
+
+// cross-browser wheel delta
+        e = window.event || e;
+        var delta = Math.max(-1, Math.min(1,
+            (e.wheelDelta || -e.deltaY || -e.detail)));
+        if (!isMoving) { //if theres any #
+            if (delta < 0) {
+                isMoving = true;
+                scrollPage("down");
+            }else{
+                isMoving = true;
+                scrollPage("up");
+            }
+        }
+        return false;
+}
+
+function scrollPage(direction){
+    if(direction == "up")
+    {
+
+    }else{
+
+    }
+}
+
+window.onresize = updateWindow;

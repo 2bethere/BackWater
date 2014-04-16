@@ -1,5 +1,9 @@
-<%= render 'layouts/messages' %>
-
-<%= render 'form' %>
-
-<div class="title">New post for <%= @post.user.email%></div>
+<div id="fullpage">
+  <div class="section">
+    <div class="formsection">
+     <%= render 'layouts/messages' %>
+    <%= render 'form' %>
+    <div class="title">New post for <%= @post.user.email%></div>
+    </div>
+  </div>
+</div>

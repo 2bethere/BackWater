@@ -129,7 +129,7 @@ nav {
 }
 
 .sectiontitle {
-  margin: 10px 0px;
+  margin: 0px 0px;
   background-color: #AAA;
   color: #FFF;
   padding: 10px;
@@ -297,5 +297,11 @@ nav {
 }
 
 .datacontainer {
-  
+  display: none;
+}
+
+.formsection {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 700px;
 }
