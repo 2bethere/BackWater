@@ -47,6 +47,8 @@ class PostsController < ApplicationController
     @post.test_result_cholera_o139 = post_params[:test_result_cholera_o139]
     @post.test_result_coliform = post_params[:test_result_coliform]
     @post.test_result_nitrite = post_params[:test_result_nitrite]
+    #
+    @post.location = post_params[:location]
     @post.user = current_user
     respond_to do |format|
       if @post.save
@@ -103,6 +105,7 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:post_content, :test_result_cholera_o1, :test_result_cholera_o139,
                                    :test_result_nitrite, :test_result_coliform, :test_result_arsenic,
+                                   :location,
                                    images_attributes: [:file => []] )
     end
 end

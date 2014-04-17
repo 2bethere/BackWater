@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140401031332) do
+ActiveRecord::Schema.define(version: 20140417071715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20140401031332) do
     t.integer  "test_result_cholera_o139"
     t.integer  "test_result_coliform"
     t.integer  "test_result_nitrite"
+    t.string   "location",                 limit: 1000
   end
 
   create_table "users", force: true do |t|

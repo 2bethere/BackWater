@@ -14,11 +14,55 @@ var bgStore = new Object();
 /* Main stage program starts here */
 var url;
 
+var map;
+var geocoder;
+var marker;
+//
+function initialize() {
+    geocoder = new google.maps.Geocoder();
+
+    var mapStyle = [ { "elementType": "geometry", "stylers": [ { "saturation": -100 } ] },{ "elementType": "labels", "stylers": [ { "saturation": 1 } ] } ];
+    var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+
+    var mapOptions = {
+        zoom: 3,
+        disableDefaultUI: true,
+        center: myLatlng,
+        styles: mapStyle
+    };
+
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+    marker = new google.maps.Marker({
+        map: map,
+        anchorPoint: new google.maps.Point(0, 0)
+    });
+    marker.setIcon(/** @type {google.maps.Icon} */({
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(35, 35),
+        animation: google.maps.Animation.DROP
+    }));
+
+}
+
+function loadScript() {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDQLZ-U3WnaDM6IoWVrM90P9sFswn2xbVg&sensor=false&' +
+            'libraries=places&callback=initialize';
+    document.body.appendChild(script);
+}
+
+
+
 $( document ).ready(function() {
     updateWindow();
     setupNavLinkClick();
     setupFormsAndLinks();
-
+    loadScript();
     //setupScroll();
 
 });
@@ -77,6 +121,7 @@ function setupNavLinkClick(){
                         afterLoad: renderPostGraph,
                         afterRender: renderPostGraph
                         });
+                setupLocationComplete();
                 renderPostGraph(null, 0);
             })
             .fail(function(result) {
@@ -84,6 +129,81 @@ function setupNavLinkClick(){
                 $("#boxoverlay").slideDown("slow");
             });
     });
+}
+
+function offsetCenter(latlng,offsetx,offsety) {
+
+// latlng is the apparent centre-point
+// offsetx is the distance you want that point to move to the right, in pixels
+// offsety is the distance you want that point to move upwards, in pixels
+// offset can be negative
+// offsetx and offsety are both optional
+
+    var scale = Math.pow(2, map.getZoom());
+    var nw = new google.maps.LatLng(
+            map.getBounds().getNorthEast().lat(),
+            map.getBounds().getSouthWest().lng()
+    );
+
+    var worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latlng);
+    var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
+
+    var worldCoordinateNewCenter = new google.maps.Point(
+            worldCoordinateCenter.x - pixelOffset.x,
+            worldCoordinateCenter.y + pixelOffset.y
+    );
+
+    var newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+
+    map.panTo(newCenter);
+    marker.setPosition(latlng);
+}
+
+function setupLocationComplete(){
+    if(!$("#post_location").length){ return;} // Can't find input
+    var input = /** @type {HTMLInputElement} */(
+            document.getElementById('post_location'));
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', map);
+    //
+    //var infowindow = new google.maps.InfoWindow();
+
+
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+        //infowindow.close();
+        marker.setVisible(false);
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            return;
+        }
+
+        // If the place has a geometry, then present it on a map.
+        if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+        } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(10);  // Why 17? Because it looks good.
+        }
+        offsetCenter(place.geometry.location,400);
+
+        marker.setPosition(place.geometry.location);
+        marker.setVisible(true);
+
+        var address = '';
+        if (place.address_components) {
+            address = [
+                (place.address_components[0] && place.address_components[0].short_name || ''),
+                (place.address_components[1] && place.address_components[1].short_name || ''),
+                (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
+        }
+
+        //infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+        //infowindow.open(map, marker);
+    });
+
+
+
 }
 
 function renderPostGraph(anchorLink, index) {
@@ -151,7 +271,7 @@ function renderPostGraph(anchorLink, index) {
         var g = cholera_group.selectAll()
                 .data(pie(plotData))
                 .enter().append("g");
-        console.log(g);
+
 
         g.append("path")
                 .style("fill", function(d) { return d.data.color; })
@@ -198,9 +318,10 @@ function renderPostGraph(anchorLink, index) {
         if(count > 1) {
             plotData.push({color:"#CD539E"});
         }
-
-
-        var end_angle = 20 * (count);
+        for(var i = count;i>0;i--)
+        {
+            plotData.push({color:"#EEEEEE"});
+        }
 
         var nitrite_group = vis.append("g");
 
@@ -210,7 +331,7 @@ function renderPostGraph(anchorLink, index) {
 
         var pie = d3.layout.pie()
                 .startAngle(-120/180*Math.PI)
-                .endAngle(end_angle/180*Math.PI)
+                .endAngle(120/180*Math.PI)
                 .value(function() { return 1; });
 
         var g = nitrite_group.selectAll()
@@ -273,7 +394,7 @@ function renderPostGraph(anchorLink, index) {
         var g = cholera_group.selectAll()
                 .data(pie(plotData))
                 .enter().append("g");
-        console.log(g);
+
 
         g.append("path")
                 .style("fill", function(d) { return d.data.color; })
@@ -320,9 +441,10 @@ function renderPostGraph(anchorLink, index) {
         if(count > 1) {
             plotData.push({color:"#793C2C"});
         }
-
-
-        var end_angle = 20 * (count);
+        for(var i = count;i>0;i--)
+        {
+            plotData.push({color:"#EEEEEE"});
+        }
 
         var arsenic_group = vis.append("g");
 
@@ -332,7 +454,7 @@ function renderPostGraph(anchorLink, index) {
 
         var pie = d3.layout.pie()
                 .startAngle(-120/180*Math.PI)
-                .endAngle(end_angle/180*Math.PI)
+                .endAngle(120/180*Math.PI)
                 .value(function() { return 1; });
 
         var g = nitrite_group.selectAll()
@@ -363,9 +485,24 @@ function renderPostGraph(anchorLink, index) {
                 .attr("width", "60")
                 .attr("height", "60");
         console.log(data);
+        //set locations
+        var address = data["location"];
+        geocoder.geocode( { 'address': address}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                console.log("Geocode");
+                console.log(results[0]);
+                offsetCenter(results[0].geometry.location,400);
+
+            } else {
+                console.log("Geocode was not successful for the following reason: " + status);
+            }
+        });
+
     }catch(err){
         console.log(err);
     }
+    // Set locations
+
 }
 
 function updateWindow(){

@@ -64,7 +64,11 @@
         <div class="choicebox" id="arsenic1"><%= f.radio_button :test_result_arsenic, "1" %></div>
       </div>
     </div>
-
+    <div class="sectiontitle">Location</div>
+    <div class="sectionwrapper">
+      <%= f.label :location %>:
+      <%= f.text_field :location%>
+    </div>
 
     <div class="sectiontitle">Images</div>
 
