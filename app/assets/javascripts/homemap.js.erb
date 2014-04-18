@@ -25,7 +25,7 @@ function initialize() {
     var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
 
     var mapOptions = {
-        zoom: 3,
+        zoom: 4,
         disableDefaultUI: true,
         center: myLatlng,
         styles: mapStyle
@@ -38,7 +38,7 @@ function initialize() {
         anchorPoint: new google.maps.Point(0, 0)
     });
     marker.setIcon(/** @type {google.maps.Icon} */({
-        url: place.icon,
+        url: '<%= asset_path 'marker.png' %>',
         size: new google.maps.Size(71, 71),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(17, 34),
@@ -84,13 +84,14 @@ function setupFormsAndLinks(){
         });
         return false;
     });
+    /*
     $(document).on("submit", "#boxoverlay", function (e) {
         var $this = $(e.target);
         $.post($this.attr('action'), $this.serialize(), function (data) {
             $("#boxoverlay").html(data);
         }, 'html');
         return false;
-    });
+    });*/
 }
 
 function setupNavLinkClick(){
@@ -138,7 +139,7 @@ function offsetCenter(latlng,offsetx,offsety) {
 // offsety is the distance you want that point to move upwards, in pixels
 // offset can be negative
 // offsetx and offsety are both optional
-
+    map.setZoom(10);
     var scale = Math.pow(2, map.getZoom());
     var nw = new google.maps.LatLng(
             map.getBounds().getNorthEast().lat(),
@@ -182,7 +183,7 @@ function setupLocationComplete(){
             map.fitBounds(place.geometry.viewport);
         } else {
             map.setCenter(place.geometry.location);
-            map.setZoom(10);  // Why 17? Because it looks good.
+            map.setZoom(14);  // Why 17? Because it looks good.
         }
         offsetCenter(place.geometry.location,400);
 
@@ -318,7 +319,7 @@ function renderPostGraph(anchorLink, index) {
         if(count > 1) {
             plotData.push({color:"#CD539E"});
         }
-        for(var i = count;i>0;i--)
+        for(var i = (6-count);i>0;i--)
         {
             plotData.push({color:"#EEEEEE"});
         }
@@ -441,7 +442,7 @@ function renderPostGraph(anchorLink, index) {
         if(count > 1) {
             plotData.push({color:"#793C2C"});
         }
-        for(var i = count;i>0;i--)
+        for(var i = (6-count);i>0;i--)
         {
             plotData.push({color:"#EEEEEE"});
         }

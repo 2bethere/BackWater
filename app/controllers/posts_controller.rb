@@ -61,7 +61,7 @@ class PostsController < ApplicationController
           end
         end
 
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Post was successfully created.' }
         format.json { render action: 'show', status: :created, location: @post }
       else
         format.html { render action: 'new' }
