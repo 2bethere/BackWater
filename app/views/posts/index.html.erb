@@ -20,7 +20,7 @@
           <div class="sectionwrapper"><%= post.post_content %></div>
           <div class="sectionwrapper">
             <% post.images.each do |image| %>
-                <%= image_tag image.file.url(:thumb)%>
+                <%= link_to (image_tag image.file.url(:thumb)),  image.file.url, :class => "imagethumb" %>
             <% end %>
           </div>
         </div>

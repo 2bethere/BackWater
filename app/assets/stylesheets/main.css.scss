@@ -80,6 +80,17 @@ nav {
   box-shadow: 4px 4px 4px #888888;
 }
 
+#picturebox {
+  background-color: #FFF;
+  z-index: 200;
+  position: fixed;
+  height:700px;
+  width: 800px;
+  display: none;
+  box-shadow: 4px 4px 4px #888888;
+  right: 0px;
+}
+
 .postwrapper {
   height: 100%;
 }

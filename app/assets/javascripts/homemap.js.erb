@@ -84,6 +84,13 @@ function setupFormsAndLinks(){
         });
         return false;
     });
+    $(document).on("click",".imagethumb",function(e){
+        console.log(e.target.parentNode.href);
+        $("#picturebox").offset({top: 60, left: 1200});
+        $("#picturebox").html('<img src="'+e.target.parentNode.href +'" width="100%" />');
+        $("#picturebox").show();
+        return false;
+    });
     /*
     $(document).on("submit", "#boxoverlay", function (e) {
         var $this = $(e.target);
