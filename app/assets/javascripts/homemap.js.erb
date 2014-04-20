@@ -86,11 +86,23 @@ function setupFormsAndLinks(){
     });
     $(document).on("click",".imagethumb",function(e){
         console.log(e.target.parentNode.href);
-        $("#picturebox").offset({top: 60, left: 1200});
-        $("#picturebox").html('<img src="'+e.target.parentNode.href +'" width="100%" />');
+        var postPos = $("#boxoverlay").offset();
+        $("#picturebox").html('<span class="helper"></span><img src="'+e.target.parentNode.href +'" width="100%" />');
+        $("#picturebox").offset({top: 60, left: (postPos.left + 700)});
         $("#picturebox").show();
+        $("#closebutton").show();
+        var closeOffset = $("#picturebox img").offset();
+        closeOffset.left -=30;
+        closeOffset.top -=30;
+        $("#closebutton").offset(closeOffset);
         return false;
     });
+
+    $(document).on("click","#closebutton",function(e){
+        $("#closebutton").hide();
+        $("#picturebox").html('');
+    });
+
     /*
     $(document).on("submit", "#boxoverlay", function (e) {
         var $this = $(e.target);
@@ -146,7 +158,7 @@ function offsetCenter(latlng,offsetx,offsety) {
 // offsety is the distance you want that point to move upwards, in pixels
 // offset can be negative
 // offsetx and offsety are both optional
-    map.setZoom(10);
+    map.setZoom(6);
     var scale = Math.pow(2, map.getZoom());
     var nw = new google.maps.LatLng(
             map.getBounds().getNorthEast().lat(),
@@ -283,8 +295,8 @@ function renderPostGraph(anchorLink, index) {
 
         g.append("path")
                 .style("fill", function(d) { return d.data.color; })
-                .attr("transform", "translate(140,140)")
-                .transition().delay(function(d, i) { return i * 2000; }).duration(2000)
+                .attr("transform", "translate(140,100)")
+                .transition().delay(function(d, i) { return i * 600; }).duration(600)
                 .ease("linear")
                 .attrTween('d', function(d) {
                     var i = d3.interpolate(d.startAngle+0, d.endAngle);
@@ -301,7 +313,7 @@ function renderPostGraph(anchorLink, index) {
             .append("image")
             .attr("xlink:href", '<%= asset_path 'cholera.png' %>')
             .attr("x", "110")
-            .attr("y", "140")
+            .attr("y", "100")
             .attr("width", "60")
             .attr("height", "60");
 
@@ -348,8 +360,8 @@ function renderPostGraph(anchorLink, index) {
 
         g.append("path")
                 .style("fill", function(d) { console.log(d); return d.data.color; })
-                .attr("transform", "translate(410,140)")
-                .transition().delay(function(d, i) { return i * 500; }).duration(500)
+                .attr("transform", "translate(410,100)")
+                .transition().delay(function(d, i) { return i * 200; }).duration(200)
                 .ease("linear")
                 .attrTween('d', function(d) {
                     var i = d3.interpolate(d.startAngle+0, d.endAngle);
@@ -366,7 +378,7 @@ function renderPostGraph(anchorLink, index) {
                 .append("image")
                 .attr("xlink:href", '<%= asset_path 'nitrite.png' %>')
                 .attr("x", "380")
-                .attr("y", "140")
+                .attr("y", "100")
                 .attr("width", "60")
                 .attr("height", "60");
         //coliform
@@ -406,8 +418,8 @@ function renderPostGraph(anchorLink, index) {
 
         g.append("path")
                 .style("fill", function(d) { return d.data.color; })
-                .attr("transform", "translate(140,340)")
-                .transition().delay(function(d, i) { return i * 2000; }).duration(2000)
+                .attr("transform", "translate(140,300)")
+                .transition().delay(function(d, i) { return i * 600; }).duration(600)
                 .ease("linear")
                 .attrTween('d', function(d) {
                     var i = d3.interpolate(d.startAngle+0, d.endAngle);
@@ -424,7 +436,7 @@ function renderPostGraph(anchorLink, index) {
                 .append("image")
                 .attr("xlink:href", '<%= asset_path 'coliform.png' %>')
                 .attr("x", "110")
-                .attr("y", "340")
+                .attr("y", "300")
                 .attr("width", "60")
                 .attr("height", "60");
 
@@ -471,8 +483,8 @@ function renderPostGraph(anchorLink, index) {
 
         g.append("path")
                 .style("fill", function(d) { console.log(d); return d.data.color; })
-                .attr("transform", "translate(410,340)")
-                .transition().delay(function(d, i) { return i * 500; }).duration(500)
+                .attr("transform", "translate(410,300)")
+                .transition().delay(function(d, i) { return i * 200; }).duration(200)
                 .ease("linear")
                 .attrTween('d', function(d) {
                     var i = d3.interpolate(d.startAngle+0, d.endAngle);
@@ -489,7 +501,7 @@ function renderPostGraph(anchorLink, index) {
                 .append("image")
                 .attr("xlink:href", '<%= asset_path 'arsenic.png' %>')
                 .attr("x", "380")
-                .attr("y", "340")
+                .attr("y", "300")
                 .attr("width", "60")
                 .attr("height", "60");
         console.log(data);

@@ -31,11 +31,11 @@ ActiveRecord::Schema.define(version: 20140417071715) do
     t.datetime "updated_at"
     t.text     "post_content"
     t.integer  "user_id"
-    t.integer  "test_result_arsenic"
-    t.integer  "test_result_cholera_o1"
-    t.integer  "test_result_cholera_o139"
-    t.integer  "test_result_coliform"
-    t.integer  "test_result_nitrite"
+    t.integer  "test_result_arsenic",                   default: 0
+    t.integer  "test_result_cholera_o1",                default: 0
+    t.integer  "test_result_cholera_o139",              default: 0
+    t.integer  "test_result_coliform",                  default: 0
+    t.integer  "test_result_nitrite",                   default: 0
     t.string   "location",                 limit: 1000
   end
 

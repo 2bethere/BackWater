@@ -1,6 +1,11 @@
 $font-stack: sans-serif;
 $primary-color: #2233FF;
 
+@font-face {
+  font-family: 'GothamRound';
+  src: image-url("GothamRounded.otf") format("opentype");
+}
+
 main {
   width: 100%;
   height: 100%;
@@ -14,7 +19,7 @@ html {
 }
 
 body {
-  font: 100% $font-stack;
+  font-family: 'GothamRound', sans-serif;
   color: $primary-color;
   width: 100%;
   height: 100%;
@@ -44,21 +49,29 @@ nav {
   margin-right: auto;
   margin-top: 0px;
   margin-bottom: 0px;
-
 }
+
+.navmid li {
+  text-align: left;
+}
+
 .navfloat {
   position: fixed;
   top: 0px;
   right: 0px;
-  height: 30px;
-  padding: 12px;
-  font-size: 16pt;
-  background-color: rgba(255,255,255,0.8);
+  height: 40px;
+  padding: 8px;
+  font-size: 24pt;
+  background-color: rgba(255,255,255,0.4);
 }
+
+.navfloat:hover {
+  background-color: rgba(255,255,255,1);
+}
+
 .navfloat a{
   text-decoration: none;
   color: $primary-color;
-
 }
 
 #map-canvas {
@@ -81,14 +94,47 @@ nav {
 }
 
 #picturebox {
-  background-color: #FFF;
   z-index: 200;
   position: fixed;
   height:700px;
   width: 800px;
   display: none;
+  overflow: hidden;
+  text-align: center; margin: 1em 0;
+}
+
+#picturebox img {
+  display: inline-block;
+  vertical-align: middle;
+  width: auto;
+  height: auto;
+  max-width: 740px;
+  max-height: 640px;
   box-shadow: 4px 4px 4px #888888;
+}
+
+.helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+#closebutton {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  color: $primary-color;
+  font-size: 28pt;
+  text-align: center;
+  position: fixed;
+  top: 0px;
   right: 0px;
+  z-index: 600;
+  display: none;
+  background-color: #fff;
+  box-shadow: 1px 1px 4px #000;
+  border: 8px solid $primary-color;
+  border-radius: 40px;
 }
 
 .postwrapper {
@@ -110,13 +156,12 @@ nav {
 
 .navmid li {
   color: $primary-color;
-  font-size: 16pt;
+  font-size: 24pt;
   list-style-type: none;
   width: 300px;
   height: 40px;
-  padding-top: 16px;
+  padding: 8px;
   float: left;
-  text-align: center;
   background-color: rgba(255,255,255,0.4);
   cursor: pointer;
   margin-right: 20px;
@@ -125,7 +170,6 @@ nav {
 .navmid li:hover {
   background-color: rgba(255,255,255,1);
 }
-
 
 .navmid li a {
   color: $primary-color;
@@ -141,10 +185,10 @@ nav {
 
 .sectiontitle {
   margin: 0px 0px;
-  background-color: #AAA;
+  background-color: #CCC;
   color: #FFF;
   padding: 10px;
-  height: 20px;
+  height: 18px;
   font-size: 14pt;
   font-weight: bold;
   clear:both;
@@ -319,4 +363,104 @@ nav {
   overflow-y: scroll;
   overflow-x: hidden;
   height: 700px;
+}
+
+.postcontent {
+  margin: 14px;
+  color: #000;
+}
+
+.thumbcontainer {
+  width: 60px;
+  height: 60px;
+  float: left;
+  overflow: hidden;
+  margin-right: 10px;
+  border: 2px solid #FFF;
+}
+
+.thumbcontainer:hover {
+  border: 2px solid $primary-color;
+}
+
+.mypostrow {
+  width: 100%;
+  height: 80px;
+}
+
+.mypostrow:nth-child(even) {
+  background-color: #6D6E70;
+}
+
+.mypostrow:nth-child(odd) {
+  background-color: #B3B2B3;
+}
+
+.mypostinfo{
+  clear: both;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: #FFF;
+  font-size: 14pt;
+  height: 16px;
+}
+
+.mypostlocation {
+  float: left;
+}
+.mypostdate {
+  float: right;
+
+}
+
+.mypostsection {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 100%;
+}
+
+.myposticon {
+  clear: both;
+  margin-right: 8px;
+  height: 30px;
+  margin-top: 10px;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.iconfloat {
+  float: right;
+}
+
+.icon3w {
+  background-image: image-url("3w.png");
+}
+.icon3b {
+  background-image: image-url("3b.png");
+}
+
+.icon4w {
+  background-image: image-url("4w.png");
+}
+.icon4b {
+  background-image: image-url("4b.png");
+}
+.icon5w {
+  background-image: image-url("5w.png");
+}
+.icon5b {
+  background-image: image-url("5b.png");
+}
+.icon6w {
+  background-image: image-url("6w.png");
+}
+.icon6b {
+  background-image: image-url("6b.png");
 }

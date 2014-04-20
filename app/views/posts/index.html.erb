@@ -17,13 +17,18 @@
             </div>
             <svg id="grapharea" width="600" height="400"></svg>
           </div>
-          <div class="sectionwrapper"><%= post.post_content %></div>
           <div class="sectionwrapper">
-            <% post.images.each do |image| %>
-                <%= link_to (image_tag image.file.url(:thumb)),  image.file.url, :class => "imagethumb" %>
-            <% end %>
+            <div class="postcontent"><%= post.post_content %></div>
           </div>
-        </div>
+          <div class="sectionwrapper">
+
+                <% post.images.each do |image| %>
+                <div class="thumbcontainer">
+                    <%= link_to (image_tag image.file.url(:thumb)),  image.file.url, :class => "imagethumb" %>
+                </div>
+                <% end %>
+            </div>
+          </div>
       </div>
   <% end %>
 </div>
