@@ -3,6 +3,8 @@ var w = window,
     e = d.documentElement,
     g = d.getElementsByTagName('body')[0];
 
+var stateObj;
+
 var isMoving = false;
 
 var bwConfig = new Object();
@@ -84,6 +86,7 @@ function setupFormsAndLinks(){
         });
         return false;
     });
+    //
     $(document).on("click",".imagethumb",function(e){
         console.log(e.target.parentNode.href);
         var postPos = $("#boxoverlay").offset();
@@ -97,10 +100,17 @@ function setupFormsAndLinks(){
         $("#closebutton").offset(closeOffset);
         return false;
     });
-
+    //
     $(document).on("click","#closebutton",function(e){
         $("#closebutton").hide();
         $("#picturebox").html('');
+    });
+    //
+    $(document).on("click",".mypostrow",function(e){
+        var data_element = $(e.target).closest(".mypostrow").children(".datacontainer").html();
+        // data_element is the post id
+        loadPostUrl(data_element);
+        history.pushState(stateObj, "post "+data_element, "/l/"+data_element);
     });
 
     /*
@@ -149,6 +159,34 @@ function setupNavLinkClick(){
                 $("#boxoverlay").slideDown("slow");
             });
     });
+}
+
+function loadPostUrl(postid) {
+    var $t = $(".navmid li");
+    var offset = $t.offset().left + ( $t.width() - $("#boxoverlay").width())/2 ;
+
+    // Hide if the box is visible
+    $("#boxoverlay").slideUp("fast");
+    $("#boxoverlay").offset({ top: 60, left: offset });
+    var url = "/posts/list/"+postid;
+    $.ajax( url )
+            .done(function(result) {
+                $("#boxoverlay").html(result);
+                $("#boxoverlay").slideDown("slow");
+
+                console.log("new page loaded, applying fullpage scroll");
+                console.log($('#fullpage'));
+                $('#fullpage').fullpage(
+                        {verticalCentered:false,
+                            navigation:true,
+                            normalScrollElements: '#map-canvas, .scrollpanel',
+                            scrollOverflow: true,
+                            afterLoad: renderPostGraph,
+                            afterRender: renderPostGraph
+                        });
+                setupLocationComplete();
+                renderPostGraph(null, 0);
+            });
 }
 
 function offsetCenter(latlng,offsetx,offsety) {

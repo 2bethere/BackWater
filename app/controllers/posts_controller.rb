@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   layout "posts"
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :list]
 
   # This is our new function that comes before Devise's one
   before_filter :authenticate_user_from_token!, except: [:show, :index]
@@ -11,7 +11,12 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all.limit(10);
+    @posts = Post.all.limit(10)
+  end
+
+  def list
+    highid = @post.id
+    @posts = Post.where('id <='+ highid.to_s).limit(10)
   end
 
   def my

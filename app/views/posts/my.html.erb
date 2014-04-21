@@ -4,6 +4,7 @@
       <div class="mypostscroll">
         <% @posts.each do |post| %>
             <div class="mypostrow">
+              <div class="datacontainer"><%= post.id %></div>
               <div class="mypostinfo">
                 <div class="mypostlocation"><%= post.location || "No location" %></div>
                 <div class="mypostdate"><%= l(post.created_at, :format => "%m/%d/%Y") %></div>
