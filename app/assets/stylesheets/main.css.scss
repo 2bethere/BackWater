@@ -26,31 +26,117 @@ body {
   margin: 0;
 }
 
+
+// Left menu
+.leftmenu {
+  width: 140px;
+  background-color: #FFF;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  z-index: 1000;
+}
+
+.menubuttoncontainer {
+  margin-top: 50px;
+}
+
+.menubutton {
+  width: 140px;
+  height: 100px;
+  cursor: pointer;
+  border-right: 4px solid #FFF;
+  transition: border-right-color 0.5s ease;
+  box-sizing: border-box;
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  padding: 8px;
+}
+
+.menuhighlight {
+  width: 4px;
+  height: 100px;
+  background-color: $primary-color;
+  position: fixed;
+  left: 136px;
+  top: -200px;
+}
+
+@keyframes blink {
+  50% { border-color: $primary-color; }
+}
+
+.menubutton:hover {
+  //border-right-color: $primary-color;
+  animation: blink 1s ease-in infinite normal;
+}
+
+.menubuttonicon {
+  width: 40px;
+  height: 40px;
+  background-color: #EEE;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.menubuttontext {
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 10pt;
+}
+
+// Main logo
+.logocontainer {
+  margin-left: 30px;
+  margin-top: 20px;
+}
+
+.logotitle {
+  font-size: 10pt;
+  font-weight: bold;
+}
+
+.logosubtitle {
+  font-size: 6pt;
+  color: #000;
+}
+
+// Main page box
+.boxcontainer {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+  left: 140px;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.boxpanel {
+  position: relative;
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+  background-color: #F00;
+  position: relative;
+}
+
+// Post page nav
 nav {
   height: 50px;
   width: 100%;
-  position: fixed;
+  position: absolute;
   padding: 0px;
   top: 0px;
   left: 0px;
   z-index: 1001;
 }
 
-.logocontainer {
-  position: fixed;
-  top: 40px;
-  left: 20px;
-  z-index: 300;
-}
-
-.logotitle {
-  font-size: 12pt;
-  font-weight: bold;
-}
-
-.logosubtitle {
-  font-size: 8pt;
-}
 
 .navmid{
   width: 1400px;
@@ -61,12 +147,8 @@ nav {
   margin-bottom: 0px;
 }
 
-.navmid li {
-  text-align: left;
-}
-
 .navfloat {
-  position: fixed;
+  position: relative;
   top: 0px;
   right: 0px;
   height: 40px;
@@ -84,12 +166,37 @@ nav {
   color: $primary-color;
 }
 
+.navmid li {
+  text-align: left;
+  color: $primary-color;
+  font-size: 18pt;
+  list-style-type: none;
+  width: 400px;
+  height: 30px;
+  padding: 8px;
+  float: left;
+  background-color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.navmid li:hover {
+  background-color: rgba(255,255,255,1);
+}
+
+.navmid li a {
+  color: $primary-color;
+  text-decoration: none;
+}
+
+// Google map
 #map-canvas {
   height: 100%;
   margin-left: 0px;
   padding: 0px;
 }
 
+// New feed page box
 #boxoverlay {
   width: 600px;
   height: 700px;
@@ -190,27 +297,6 @@ nav {
   opacity: 0.3;
 }
 
-.navmid li {
-  color: $primary-color;
-  font-size: 18pt;
-  list-style-type: none;
-  width: 400px;
-  height: 30px;
-  padding: 8px;
-  float: left;
-  background-color: rgba(255,255,255,0.4);
-  cursor: pointer;
-  margin-right: 20px;
-}
-
-.navmid li:hover {
-  background-color: rgba(255,255,255,1);
-}
-
-.navmid li a {
-  color: $primary-color;
-  text-decoration: none;
-}
 
 .title {
   color: $primary-color;

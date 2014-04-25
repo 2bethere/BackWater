@@ -1,11 +1,34 @@
 <% content_for :head do %>
- <%= javascript_include_tag 'homemap' %>
- <%= javascript_include_tag 'topojson.v1.min' %>
+    <%= javascript_include_tag 'homemap' %>
+    <%= javascript_include_tag 'topojson.v1.min' %>
 <% end %>
+<div class="boxcontainer">
+  <div class="boxpanel">
+    <div class="box" id="boxmission">
+      Our mission
+    </div>
+    <div class="box" id="boxnewsfeed">
+      <%= render 'layouts/navigation' %>
+      <div id="crossoverlay"></div>
+      <div id="boxoverlay"></div>
+      <div id="picturebox"></div>
+      <div id="closebutton">X</div>
+      <div id="map-canvas"></div>
+    </div>
+    <div class="box" id="boxkit">
+      Request kit
+    </div>
+    <div class="box" id="boxdata">
+      Data
+    </div>
+    <div class="box" id="boxdata">
 
-<div id="crossoverlay"></div>
-<div id="boxoverlay"></div>
-<div id="picturebox"></div>
-<div id="closebutton">X</div>
-<div id="map-canvas"/>
+        <% if user_signed_in? %>
+            <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
+        <% else %>
+            <%= link_to 'Login', new_user_session_path %>
+        <% end %>
 
+    </div>
+  </div>
+</div>
