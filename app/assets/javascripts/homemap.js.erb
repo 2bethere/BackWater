@@ -96,10 +96,24 @@ function moveBoxToIndex(targetIndex)
 
     var offset = $(".menubuttoncontainer").offset();
     var buttonHeight = $(".menubutton").first().outerHeight();
-    console.log( buttonHeight );
     $( ".menuhighlight" ).animate({
         top : offset.top + buttonHeight * targetIndex
     }, 1000);
+    // Menu icons
+    // Reset all icons to gray
+    $(".menubutton").children(".menubuttonicon").css("background-image", function(index, value){
+    return value.replace("blue","gray");
+    });
+    // blue icon
+
+    var bgurl = $($(".menubutton")[targetIndex]).children(".menubuttonicon").css("background-image");
+    var result = bgurl.replace("gray","blue");
+    $($(".menubutton")[targetIndex]).children(".menubuttonicon").css("background-image",result);
+    // reset all text
+    $(".menubuttontext").removeClass("menubuttontextactive");
+    //blue text
+
+    $($(".menubutton")[targetIndex]).children(".menubuttontext").addClass("menubuttontextactive");
 }
 
 function setupFormsAndLinks(){

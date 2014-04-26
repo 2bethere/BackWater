@@ -75,19 +75,41 @@ body {
 .menubuttonicon {
   width: 40px;
   height: 40px;
-  background-color: #EEE;
+
   margin-left: auto;
   margin-right: auto;
 
 }
 
 .menubuttontext {
+  color: #000;
   width: 100%;
   margin-top: 10px;
   text-align: center;
   font-size: 10pt;
 }
 
+.menubuttontextactive {
+  color: $primary-color;
+}
+
+#menubuttonmission {
+  background-image:image-url("menu/ourmission_gray.png");
+}
+#menubuttonnews {
+  background-image:image-url("menu/newsfeed_gray.png");
+}
+
+#menubuttonkit {
+  background-image:image-url("menu/requestkit_gray.png");
+}
+
+#menubuttonexport {
+  background-image:image-url("menu/exportdata_gray.png");
+}
+#menubuttonsignin {
+  background-image:image-url("menu/signin_gray.png");
+}
 // Main logo
 .logocontainer {
   margin-left: 30px;
@@ -128,7 +150,7 @@ body {
 
 // Post page nav
 nav {
-  height: 50px;
+  height: 40px;
   width: 100%;
   position: absolute;
   padding: 0px;
@@ -139,10 +161,8 @@ nav {
 
 
 .navmid{
-  width: 1400px;
-  height: 40px;
-  margin-left: auto;
-  margin-right: auto;
+  width: 1800px;
+  height: 45px;
   margin-top: 0px;
   margin-bottom: 0px;
 }
@@ -169,15 +189,18 @@ nav {
 .navmid li {
   text-align: left;
   color: $primary-color;
-  font-size: 18pt;
+  font-size: 24pt;
   list-style-type: none;
-  width: 400px;
-  height: 30px;
-  padding: 8px;
+  width: 500px;
+  height: 45px;
+  padding-left: 30px;
   float: left;
-  background-color: rgba(255,255,255,0.4);
+  background-color: rgba(203,203,203,0.5);
   cursor: pointer;
-  margin-right: 20px;
+  margin-right: 15px;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box
 }
 
 .navmid li:hover {
@@ -198,9 +221,10 @@ nav {
 
 // New feed page box
 #boxoverlay {
-  width: 600px;
-  height: 700px;
-  position: fixed;
+  width: 500px;
+  height: 100%;
+  max-height: 950px;
+  position: absolute;
   top: 0px;
   left: 0px;
   background-color: rgba(255,255,255,0.9);
