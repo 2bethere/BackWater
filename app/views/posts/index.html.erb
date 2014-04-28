@@ -1,20 +1,23 @@
+<div class="sectionhead postheader">
+  <div id="postsearchbox">
+    <input type="text" id="searchbox">
+  </div>
+  <div class="filterrow">
+    <div class="filterbutton icon3b rightedge"></div>
+    <div class="filterbutton icon4b rightedge"></div>
+    <div class="filterbutton icon5b rightedge"></div>
+    <div class="filterbutton icon6b rightedge"></div>
+    <div class="filterbutton icon6b"></div>
+  </div>
+</div>
 <div id="fullpage">
   <% @posts.each do |post| %>
       <div class="section">
         <div class="postwrapper">
-          <div class="sectionhead">
-            <div class="sectionwrapper">
-                <input type="text" id="searchbox">
-            </div>
-            <div class="filterrow">
-              <div class="filterbutton icon3b rightedge"></div>
-              <div class="filterbutton icon4b rightedge"></div>
-              <div class="filterbutton icon5b rightedge"></div>
-              <div class="filterbutton icon6b rightedge"></div>
-              <div class="filterbutton icon6b"></div>
-            </div>
+
+          <div class="sectiontitle"><%= post.location || "No location" %>
+            <div class="postdate"><%= l(post.created_at, :format => "%m/%d/%Y") %></div>
           </div>
-          <div class="sectiontitle"><%= post.location || "No location" %></div>
           <div class="sectionwrapper">
             <div class="datacontainer">
               {"cholera_o1":<%= post.test_result_cholera_o1||0%>,
@@ -24,7 +27,7 @@
               "arsenic":<%= post.test_result_arsenic||0%>,
               "location":"<%= post.location||'Seattle, WA, United States'%>"}
             </div>
-            <svg id="grapharea" width="600" height="400"></svg>
+            <svg id="grapharea" width="500" height="540"></svg>
           </div>
           <div class="sectionwrapper">
             <div class="postcontent"><%= post.post_content %></div>
@@ -33,7 +36,7 @@
 
                 <% post.images.each do |image| %>
                 <div class="thumbcontainer">
-                    <%= link_to (image_tag image.file.url(:thumb)),  image.file.url, :class => "imagethumb" %>
+                    <%= link_to (image_tag image.file.url(:medium)),  image.file.url, :class => "imagethumb" %>
                 </div>
                 <% end %>
             </div>

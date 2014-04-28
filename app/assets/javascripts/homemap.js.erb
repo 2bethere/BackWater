@@ -66,16 +66,6 @@ function loadScript() {
 }
 
 
-
-$( document ).ready(function() {
-    updateWindow();
-    setupBox();
-    moveBoxToIndex(1); // 0 based index
-    setupNavLinkClick();
-    setupFormsAndLinks();
-    loadScript();
-});
-
 //
 function setupBox(){
     width = window.innerWidth;
@@ -123,7 +113,7 @@ function setupFormsAndLinks(){
         });
         return false;
     });
-    //
+    // Picture box
     $(document).on("click",".imagethumb",function(e){
         console.log(e.target.parentNode.href);
         var postPos = $("#boxoverlay").offset();
@@ -137,12 +127,12 @@ function setupFormsAndLinks(){
         $("#closebutton").offset(closeOffset);
         return false;
     });
-    //
+    // Close image
     $(document).on("click","#closebutton",function(e){
         $("#closebutton").hide();
         $("#picturebox").html('');
     });
-    //
+    // My post click
     $(document).on("click",".mypostrow",function(e){
         var data_element = $(e.target).closest(".mypostrow").children(".datacontainer").html();
         // data_element is the post id
@@ -164,44 +154,37 @@ function setupNavLinkClick(){
         if(!url){
             url = $(event.target).children(":first")[0].href;
         }
-        var $t = $(event.target);
-        var offset = $t.offset().left + ( $t.width() - $("#boxoverlay").width())/2 ;
+        var t = $(event.target).closest("li");
 
-        // Hide if the box is visible
-        $("#boxoverlay").slideUp("fast");
-
-        $("#boxoverlay").offset({ top: 60, left: offset });
         $.ajax( url )
-            .done(function(result) {
-                $("#boxoverlay").html(result);
-                $("#boxoverlay").slideDown("slow");
-                console.log("new page loaded, applying fullpage scroll");
-                console.log($('#fullpage'));
-                $('#fullpage').fullpage(
-                    {verticalCentered:false,
-                        navigation:true,
-                        normalScrollElements: '#map-canvas, .scrollpanel',
-                        scrollOverflow: true,
-                        afterLoad: renderPostGraph,
-                        afterRender: renderPostGraph
-                        });
-                setupLocationComplete();
-                renderPostGraph(null, 0);
-            })
-            .fail(function(result) {
-                $("#boxoverlay").load("/users/sign_in");
-                $("#boxoverlay").slideDown("slow");
-            });
+                .done(function(result) {
+                    $("#boxoverlay").html(result);
+                    $("#boxoverlay").slideDown("slow");
+                    console.log("new page loaded, applying fullpage scroll");
+                    console.log($('#fullpage'));
+                    $('#fullpage').fullpage(
+                            {verticalCentered:false,
+                                navigation:true,
+                                normalScrollElements: '#map-canvas, .scrollpanel',
+                                scrollOverflow: true,
+                                afterLoad: renderPostGraph,
+                                afterRender: renderPostGraph
+                            });
+                    setupLocationComplete();
+                    renderPostGraph(null, 0);
+                })
+                .fail(function(result) {
+                    $("#boxoverlay").load("/users/sign_in");
+                    $("#boxoverlay").slideDown("slow");
+                })
+                .always(function() {
+                    $("#boxoverlay").offset({ top: 45, left: t.offset().left });
+
+                });
     });
 }
 
 function loadPostUrl(postid) {
-    var $t = $(".navmid li");
-    var offset = $t.offset().left + ( $t.width() - $("#boxoverlay").width())/2 ;
-
-    // Hide if the box is visible
-    $("#boxoverlay").slideUp("fast");
-    $("#boxoverlay").offset({ top: 60, left: offset });
     var url = "/posts/list/"+postid;
     $.ajax( url )
             .done(function(result) {
@@ -327,10 +310,10 @@ function renderPostGraph(anchorLink, index) {
         var plotData = new Array();
         switch(data["cholera_o1"]){
             case 2:
-                plotData.push({color: "#FF0000"});
+                plotData.push({color: "#2B3990"});
                 break;
             case 1:
-                plotData.push({color: "#00FF00"});
+                plotData.push({color: "#EEEEEE"});
                 break;
             default:
                 plotData.push({color: "#EEEEEE"});
@@ -338,10 +321,10 @@ function renderPostGraph(anchorLink, index) {
         }
         switch(data["cholera_o139"]){
             case 2:
-                plotData.push({color: "#FF0000"});
+                plotData.push({color: "#2B3990"});
                 break;
             case 1:
-                plotData.push({color: "#00FF00"});
+                plotData.push({color: "#EEEEEE"});
                 break;
             default:
                 plotData.push({color: "#EEEEEE"});
@@ -367,7 +350,7 @@ function renderPostGraph(anchorLink, index) {
 
         g.append("path")
                 .style("fill", function(d) { return d.data.color; })
-                .attr("transform", "translate(140,100)")
+                .attr("transform", "translate(120,100)")
                 .transition().delay(function(d, i) { return i * 600; }).duration(600)
                 .ease("linear")
                 .attrTween('d', function(d) {
@@ -384,11 +367,23 @@ function renderPostGraph(anchorLink, index) {
             .enter()
             .append("image")
             .attr("xlink:href", '<%= asset_path 'cholera.png' %>')
-            .attr("x", "110")
-            .attr("y", "100")
+            .attr("x", "90")
+            .attr("y", "125")
             .attr("width", "60")
             .attr("height", "60");
 
+        if(data["cholera_o1"]||data["cholera_o139"])
+        {
+            var label = "RISK";
+        }else{
+            var label = "SAFE";
+        }
+        cholera_group
+                .append("text")
+                .attr("x", "90")
+                .attr("y", "105")
+                .style("font-size","18pt")
+                .text(label);
         //nitrite
         plotData = undefined;
         plotData = new Array();
@@ -432,7 +427,7 @@ function renderPostGraph(anchorLink, index) {
 
         g.append("path")
                 .style("fill", function(d) { console.log(d); return d.data.color; })
-                .attr("transform", "translate(410,100)")
+                .attr("transform", "translate(350,100)")
                 .transition().delay(function(d, i) { return i * 200; }).duration(200)
                 .ease("linear")
                 .attrTween('d', function(d) {
@@ -449,10 +444,29 @@ function renderPostGraph(anchorLink, index) {
                 .enter()
                 .append("image")
                 .attr("xlink:href", '<%= asset_path 'nitrite.png' %>')
-                .attr("x", "380")
-                .attr("y", "100")
+                .attr("x", "321")
+                .attr("y", "125")
                 .attr("width", "60")
                 .attr("height", "60");
+
+        if(data["nitrite"] >= 3)
+        {
+            var label = "RISK";
+        }else{
+            var label = "SAFE";
+        }
+        nitrite_group
+                .append("text")
+                .attr("x", "320")
+                .attr("y", "105")
+                .style("font-size","18pt")
+                .text(label);
+        nitrite_group
+                .append("text")
+                .attr("x", "330")
+                .attr("y", "65")
+                .style("font-size","10pt")
+                .text(data["nitrite"]+ " ppm");
         //coliform
         var plotData = new Array();
         switch(data["coliform"]){
@@ -490,7 +504,7 @@ function renderPostGraph(anchorLink, index) {
 
         g.append("path")
                 .style("fill", function(d) { return d.data.color; })
-                .attr("transform", "translate(140,300)")
+                .attr("transform", "translate(120,300)")
                 .transition().delay(function(d, i) { return i * 600; }).duration(600)
                 .ease("linear")
                 .attrTween('d', function(d) {
@@ -507,10 +521,23 @@ function renderPostGraph(anchorLink, index) {
                 .enter()
                 .append("image")
                 .attr("xlink:href", '<%= asset_path 'coliform.png' %>')
-                .attr("x", "110")
-                .attr("y", "300")
+                .attr("x", "90")
+                .attr("y", "320")
                 .attr("width", "60")
                 .attr("height", "60");
+
+        if(data["coliform"]!=0)
+        {
+            var label = "RISK";
+        }else{
+            var label = "SAFE";
+        }
+        coliform_group
+                .append("text")
+                .attr("x", "90")
+                .attr("y", "305")
+                .style("font-size","18pt")
+                .text(label);
 
         //arsenic
         plotData = undefined;
@@ -555,7 +582,7 @@ function renderPostGraph(anchorLink, index) {
 
         g.append("path")
                 .style("fill", function(d) { console.log(d); return d.data.color; })
-                .attr("transform", "translate(410,300)")
+                .attr("transform", "translate(350,300)")
                 .transition().delay(function(d, i) { return i * 200; }).duration(200)
                 .ease("linear")
                 .attrTween('d', function(d) {
@@ -572,11 +599,29 @@ function renderPostGraph(anchorLink, index) {
                 .enter()
                 .append("image")
                 .attr("xlink:href", '<%= asset_path 'arsenic.png' %>')
-                .attr("x", "380")
-                .attr("y", "300")
+                .attr("x", "322")
+                .attr("y", "320")
                 .attr("width", "60")
                 .attr("height", "60");
-        console.log(data);
+        if(data["arsenic"] >= 2)
+        {
+            var label = "RISK";
+        }else{
+            var label = "SAFE";
+        }
+        arsenic_group
+                .append("text")
+                .attr("x", "320")
+                .attr("y", "305")
+                .style("font-size","18pt")
+                .text(label);
+        arsenic_group
+                .append("text")
+                .attr("x", "330")
+                .attr("y", "265")
+                .style("font-size","10pt")
+                .text(data["arsenic"]+ " ppm");
+
         // Draw line graph
         var line_group = vis.append("g");
 
@@ -636,3 +681,13 @@ function updateWindow(){
 
 
 window.onresize = updateWindow;
+
+
+$( document ).ready(function() {
+    updateWindow();
+    setupBox();
+    moveBoxToIndex(1); // 0 based index
+    setupNavLinkClick();
+    setupFormsAndLinks();
+    loadScript();
+});

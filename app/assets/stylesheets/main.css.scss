@@ -1,5 +1,6 @@
 $font-stack: sans-serif;
-$primary-color: #2233FF;
+$color-primary: #2233FF;
+$color-darkgray: #6D6E71;
 
 @font-face {
   font-family: 'GothamRound';
@@ -20,7 +21,7 @@ html {
 
 body {
   font-family: 'GothamRound', sans-serif;
-  color: $primary-color;
+  color: $color-primary;
   width: 100%;
   height: 100%;
   margin: 0;
@@ -57,14 +58,14 @@ body {
 .menuhighlight {
   width: 4px;
   height: 100px;
-  background-color: $primary-color;
+  background-color: $color-primary;
   position: fixed;
   left: 136px;
   top: -200px;
 }
 
 @keyframes blink {
-  50% { border-color: $primary-color; }
+  50% { border-color: $color-primary; }
 }
 
 .menubutton:hover {
@@ -90,7 +91,7 @@ body {
 }
 
 .menubuttontextactive {
-  color: $primary-color;
+  color: $color-primary;
 }
 
 #menubuttonmission {
@@ -150,7 +151,7 @@ body {
 
 // Post page nav
 nav {
-  height: 40px;
+  height: 45px;
   width: 100%;
   position: absolute;
   padding: 0px;
@@ -163,6 +164,7 @@ nav {
 .navmid{
   width: 1800px;
   height: 45px;
+  padding: 0px;
   margin-top: 0px;
   margin-bottom: 0px;
 }
@@ -183,12 +185,12 @@ nav {
 
 .navfloat a{
   text-decoration: none;
-  color: $primary-color;
+  color: $color-primary;
 }
 
 .navmid li {
   text-align: left;
-  color: $primary-color;
+  color: $color-primary;
   font-size: 24pt;
   list-style-type: none;
   width: 500px;
@@ -208,7 +210,7 @@ nav {
 }
 
 .navmid li a {
-  color: $primary-color;
+  color: $color-primary;
   text-decoration: none;
 }
 
@@ -223,11 +225,11 @@ nav {
 #boxoverlay {
   width: 500px;
   height: 100%;
-  max-height: 950px;
+  max-height: 1035px;
   position: absolute;
   top: 0px;
   left: 0px;
-  background-color: rgba(255,255,255,0.9);
+  background-color: rgba(255,255,255,1.0);
   z-index: 200;
   display: none;
   overflow: hidden;
@@ -261,36 +263,58 @@ nav {
 }
 
 #searchbox {
-  width: 100%;
-  font-size: 16pt;
+  width: 440px;
+  height: 40px;
+  border: none;
+  margin-top: 10px;
+  margin-left: 30px;
+  padding: 0px;
+}
+
+#postsearchbox {
+  width:100%;
+  height: 60px;
+  background-color: $color-primary;
+
 }
 
 .filterrow {
   width: 100%;
-  height: 40px;
+  height: 55px;
+  background-color: #E6E6E6;
   margin-bottom: 8px;
-  padding-left: 14px;
 }
 
 .filterbutton {
-  width: 19%;
-  height: 40px;
+  width: 100px;
+  height: 55px;
   float: left;
   background-repeat: no-repeat;
   background-position: center;
-  box-sizing:border-box;
   cursor: pointer;
+  box-sizing:border-box;
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.postheader {
+  position: relative;
+  z-index: 2002;
+}
+
+#fullpage {
+  z-index: 300;
 }
 
 .rightedge{
-  border-right: 1px solid $primary-color;
+  border-right: 1px solid $color-primary;
 }
 
 #closebutton {
   cursor: pointer;
   width: 40px;
   height: 40px;
-  color: $primary-color;
+  color: $color-primary;
   font-size: 28pt;
   text-align: center;
   position: fixed;
@@ -300,7 +324,7 @@ nav {
   display: none;
   background-color: #fff;
   box-shadow: 1px 1px 4 px #000;
-  border: 8px solid $primary-color;
+  border: 8px solid $color-primary;
   border-radius: 40px;
 }
 
@@ -323,7 +347,7 @@ nav {
 
 
 .title {
-  color: $primary-color;
+  color: $color-primary;
   font-size: 12pt;
   margin-left: 20px;
   margin-top: 20px;
@@ -331,13 +355,15 @@ nav {
 
 .sectiontitle {
   margin: 0px 0px;
-  background-color: #CCC;
-  color: #FFF;
-  padding: 10px;
-  height: 18px;
-  font-size: 14pt;
+  background-color: #FFF;
+  color: $color-primary;
+  height: 45px;
+  font-size: 18pt;
   font-weight: bold;
   clear:both;
+  padding-top: 12px;
+  padding-left: 30px;
+  border-bottom: 1px solid $color-darkgray;
 }
 
 .sectionwrapper{
@@ -345,20 +371,29 @@ nav {
   clear:both;
 }
 
+.postdate {
+  float: right;
+  color: $color-darkgray;
+  padding-right: 30px;
+  padding-top: 4px;
+  font-weight: normal;
+  font-size: 14pt;
+}
+
 .inputwrapper textarea{
   width: 98%;
   min-height: 120px;
   font-size: 12pt;
   resize: vertical;
-  border: 1px solid $primary-color;
+  border: 1px solid $color-primary;
 }
 
 .new_post input[type="submit"] {
   font-size: 16pt;
   width:120px;
   background-color: #FFF;
-  border: 2px solid $primary-color;
-  color: $primary-color;
+  border: 2px solid $color-primary;
+  color: $color-primary;
   cursor: pointer;
 }
 
@@ -511,14 +546,20 @@ nav {
   height: 700px;
 }
 
+#grapharea {
+  position: relative;
+
+}
+
 .postcontent {
   margin: 14px;
+  height: 145px;
   color: #000;
 }
 
 .thumbcontainer {
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
   float: left;
   overflow: hidden;
   margin-right: 10px;
@@ -526,7 +567,7 @@ nav {
 }
 
 .thumbcontainer:hover {
-  border: 2px solid $primary-color;
+  border: 2px solid $color-primary;
 }
 
 .mypostrow {
