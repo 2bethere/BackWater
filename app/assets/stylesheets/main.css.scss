@@ -37,6 +37,7 @@ body {
   left: 0px;
   height: 100%;
   z-index: 1000;
+  border-right: 1px solid $color-darkgray;
 }
 
 .menubuttoncontainer {
@@ -145,13 +146,13 @@ body {
 .box {
   width: 100%;
   height: 100%;
-  background-color: #F00;
   position: relative;
+  overflow: hidden;
 }
 
 // Post page nav
 nav {
-  height: 45px;
+  height: 35px;
   width: 100%;
   position: absolute;
   padding: 0px;
@@ -163,7 +164,7 @@ nav {
 
 .navmid{
   width: 1800px;
-  height: 45px;
+  height: 35px;
   padding: 0px;
   margin-top: 0px;
   margin-bottom: 0px;
@@ -191,10 +192,10 @@ nav {
 .navmid li {
   text-align: left;
   color: $color-primary;
-  font-size: 24pt;
+  font-size: 18pt;
   list-style-type: none;
   width: 500px;
-  height: 45px;
+  height: 35px;
   padding-left: 30px;
   float: left;
   background-color: rgba(203,203,203,0.5);
@@ -233,27 +234,23 @@ nav {
   z-index: 200;
   display: none;
   overflow: hidden;
-  box-shadow: 4px 4px 4px #888888;
+  box-shadow: 4px 0px 4px #888888;
 }
 
 #picturebox {
   z-index: 200;
   position: fixed;
-  height:700px;
-  width: 800px;
   display: none;
   overflow: hidden;
-  text-align: center; margin: 1em 0;
+  text-align: center;
+  margin: 1em 0;
 }
 
 #picturebox img {
   display: inline-block;
   vertical-align: middle;
-  width: auto;
+  width: 100%;
   height: auto;
-  max-width: 740px;
-  max-height: 640px;
-  box-shadow: 4px 4px 4px #888888;
 }
 
 .helper {
@@ -264,30 +261,30 @@ nav {
 
 #searchbox {
   width: 440px;
-  height: 40px;
+  height: 30px;
   border: none;
-  margin-top: 10px;
+  margin-top: 5px;
   margin-left: 30px;
   padding: 0px;
 }
 
 #postsearchbox {
   width:100%;
-  height: 60px;
+  height: 40px;
   background-color: $color-primary;
 
 }
 
 .filterrow {
   width: 100%;
-  height: 55px;
+  height: 45px;
   background-color: #E6E6E6;
   margin-bottom: 8px;
 }
 
 .filterbutton {
   width: 100px;
-  height: 55px;
+  height: 45px;
   float: left;
   background-repeat: no-repeat;
   background-position: center;
@@ -312,10 +309,10 @@ nav {
 
 #closebutton {
   cursor: pointer;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   color: $color-primary;
-  font-size: 28pt;
+  font-size: 20pt;
   text-align: center;
   position: fixed;
   top: 0px;
@@ -325,7 +322,7 @@ nav {
   background-color: #fff;
   box-shadow: 1px 1px 4 px #000;
   border: 8px solid $color-primary;
-  border-radius: 40px;
+  border-radius: 30px;
 }
 
 .postwrapper {
@@ -357,13 +354,21 @@ nav {
   margin: 0px 0px;
   background-color: #FFF;
   color: $color-primary;
-  height: 45px;
-  font-size: 18pt;
+  height: 35px;
+  font-size: 14pt;
   font-weight: bold;
   clear:both;
   padding-top: 12px;
   padding-left: 30px;
   border-bottom: 1px solid $color-darkgray;
+}
+
+.sectiontitleleft {
+  width: 65%;
+  height: 35px;
+  white-space:nowrap;
+  overflow: hidden;
+  float: left;
 }
 
 .sectionwrapper{
@@ -375,35 +380,76 @@ nav {
   float: right;
   color: $color-darkgray;
   padding-right: 30px;
-  padding-top: 4px;
   font-weight: normal;
   font-size: 14pt;
 }
 
 .inputwrapper textarea{
-  width: 98%;
+  width: 460px;
   min-height: 120px;
   font-size: 12pt;
   resize: vertical;
   border: 1px solid $color-primary;
+  box-sizing: border-box;
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.locationinput {
+  font-size: 12pt;
+  border: 1px solid $color-primary;
+  padding: 4px;
+  width: 460px;
+  box-sizing: border-box;
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.new_post label {
+  font-weight: bold;
+}
+
+.new_post input[type="file"] {
+  color: $color-primary;
 }
 
 .new_post input[type="submit"] {
-  font-size: 16pt;
-  width:120px;
-  background-color: #FFF;
-  border: 2px solid $color-primary;
-  color: $color-primary;
-  cursor: pointer;
+
+  background: image-url("button/submit.png") no-repeat;
+  cursor:pointer;
+  width: 54px;
+  height: 54px;
+  border: none;
 }
 
+.dateselectfields {
+  width: 100%;
+  height: 30px;
+}
+
+.dateselectfields select{
+  border: 1px solid $color-primary;
+  -webkit-appearance: none;  /*Removes default chrome and safari style*/
+  -moz-appearance: none; /* Removes Default Firefox style*/
+  background: image-url('button/dropdown.png') no-repeat;  /*Adds background-image*/
+  background-position: 120px 12px;  /*Position of the background-image*/
+  width: 140px; /*Width of select dropdown to give space for arrow image*/
+  text-indent: 0.01px; /* Removes default arrow from firefox*/
+  text-overflow: "";  /*Removes default arrow from firefox*/
+  text-align: right;
+  padding-right: 10px;
+  font-size: 12pt;
+  height: 30px;
+  color: #979797;
+  border-radius: 0px;
+}
 .mid {
   margin-left: auto;
   margin-right: auto;
 }
 
 .submitwrapper {
-  width: 120px;
+  width: 54px;
 }
 
 .errorbox {
@@ -412,7 +458,7 @@ nav {
 }
 
 .testresultbox {
-  width: 180px;
+  width: 160px;
   margin-left: 30px;
   margin-right: 30px;
   height: 240px;
@@ -426,23 +472,31 @@ nav {
 
 #o1group {
   float: left;
-  width: 90px;
+  width: 80px;
+}
+
+.radioimg {
+  display: inline-block;
+  vertical-align: middle;
+  height:30px;
 }
 
 #o1group div {
-  vertical-align: middle;
+
   height: 40px;
   width: 80px;
   background-color: #EEE;
   margin-top: 10px;
   margin-bottom: 10px;
+
 }
 #o1group input{
   margin-top: 12px;
+  display: inline-block;
 }
 
 #o139group {
-  width: 90px;
+  width: 80px;
   float: right;
 }
 
@@ -540,23 +594,31 @@ nav {
   width: 100%;
 }
 
+.formpanel {
+  height: 100%;
+}
+
 .formsection {
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 700px;
+  height: 100%;
 }
 
 #grapharea {
   position: relative;
-
+  width: 500px;
+  height: 550px;
 }
 
 .postcontent {
-  margin: 14px;
-  height: 145px;
+  margin-left: 14px;
+  margin-right: 14px;
+  min-height: 40px;
   color: #000;
 }
-
+.thumbrow {
+  height: 60px;
+}
 .thumbcontainer {
   width: 100px;
   height: 100px;
@@ -570,22 +632,44 @@ nav {
   border: 2px solid $color-primary;
 }
 
+.sharerow {
+  height: 30px;
+  width: 100%;
+  position: absolute;
+  bottom: 20px;
+  right: 0px;
+  padding-right: 10px;
+}
+
+.botbuttons {
+  width: 30px;
+  height: 30px;
+  float: right;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.favbutton {
+  background-image: image-url("button/fav.png");
+}
+.editbutton {
+  background-image: image-url("button/edit.png");
+}
+.sharebutton {
+  background-image: image-url("button/share.png");
+}
+
 .mypostrow {
   width: 100%;
   height: 80px;
+  background-color: #FFF;
+  border-bottom: 1px solid #CBCACA;
 }
 
 .mypostrow:hover {
   cursor: pointer;
 }
 
-.mypostrow:nth-child(even) {
-  background-color: #6D6E70;
-}
 
-.mypostrow:nth-child(odd) {
-  background-color: #B3B2B3;
-}
 
 .mypostinfo{
   clear: both;
@@ -593,7 +677,7 @@ nav {
   padding-bottom: 10px;
   padding-left: 16px;
   padding-right: 16px;
-  color: #FFF;
+  color: $color-primary;
   font-size: 14pt;
   height: 16px;
 }
@@ -603,7 +687,7 @@ nav {
 }
 .mypostdate {
   float: right;
-
+  color: $color-darkgray;
 }
 
 .mypostsection {
@@ -615,15 +699,15 @@ nav {
 .myposticon {
   clear: both;
   margin-right: 8px;
-  height: 30px;
+  height: 26px;
   margin-top: 10px;
 }
 
 .icon {
-  width: 30px;
-  height: 30px;
-  margin-left: 8px;
-  margin-right: 8px;
+  width: 26px;
+  height: 26px;
+  margin-left: 6px;
+  margin-right: 6px;
 }
 
 .iconfloat {
@@ -631,27 +715,63 @@ nav {
 }
 
 .icon3w {
-  background-image: image-url("3w.png");
+  background-image: image-url("list/cholera_list_gray.png");
 }
 .icon3b {
-  background-image: image-url("3b.png");
+  background-image: image-url("list/cholera_list_blue.png");
 }
 
 .icon4w {
-  background-image: image-url("4w.png");
+  background-image: image-url("list/nitrate_list_gray.png");
 }
 .icon4b {
-  background-image: image-url("4b.png");
+  background-image: image-url("list/nitrate_list_blue.png");
 }
 .icon5w {
-  background-image: image-url("5w.png");
+  background-image: image-url("list/coliform_list_gray.png");
 }
 .icon5b {
-  background-image: image-url("5b.png");
+  background-image: image-url("list/coliform_list_blue.png");
 }
 .icon6w {
-  background-image: image-url("6w.png");
+  background-image: image-url("list/arsenic_list_gray.png");
 }
 .icon6b {
-  background-image: image-url("6b.png");
+  background-image: image-url("list/arsenic_list_blue.png");
+}
+
+.axis {
+  shape-rendering: crispEdges;
+}
+
+.x.axis line {
+  stroke: lightgrey;
+}
+
+.x.axis .minor {
+  stroke-opacity: .5;
+}
+
+.x.axis path {
+  display: none;
+}
+
+
+.axis {
+  font-size: 8pt;
+}
+.y.axis line, .y.axis path {
+  fill: none;
+  stroke: $color-darkgray;
+}
+
+.textbox {
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.textbox img {
+  display: inline-block;
 }

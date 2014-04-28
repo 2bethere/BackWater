@@ -138,8 +138,8 @@ var isMoving = false;
 		var isTablet = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|Windows Phone)/);
 		var container = $(this); // for compatibity reasons for fullpage < v2.0
 		//var windowsHeight = $(window).height();
-        var innerHeight = $('#boxoverlay').innerHeight();
-        var windowsHeight =  700;
+        var innerHeight = $('#boxoverlay').innerHeight()-65;
+        var windowsHeight =  $('#boxoverlay').innerHeight()-65;
 
 
 
@@ -1019,8 +1019,8 @@ var isMoving = false;
 		function doneResizing() {
 			isResizing = true;
 
-			var windowsWidth = 600;
-			windowsHeight = 700;
+			var windowsWidth = 500;
+			windowsHeight = $('#boxoverlay').innerHeight()-65;
 
 			//text and images resizing
 			if (options.resize) {

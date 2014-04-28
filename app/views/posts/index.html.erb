@@ -15,7 +15,14 @@
       <div class="section">
         <div class="postwrapper">
 
-          <div class="sectiontitle"><%= post.location || "No location" %>
+          <div class="sectiontitle">
+            <div class="sectiontitleleft">
+            <% if post.location.blank? %>
+                 No location
+            <% else %>
+                <%= post.location %>
+            <% end %>
+            </div>
             <div class="postdate"><%= l(post.created_at, :format => "%m/%d/%Y") %></div>
           </div>
           <div class="sectionwrapper">
@@ -27,19 +34,23 @@
               "arsenic":<%= post.test_result_arsenic||0%>,
               "location":"<%= post.location||'Seattle, WA, United States'%>"}
             </div>
-            <svg id="grapharea" width="500" height="540"></svg>
+            <svg id="grapharea"></svg>
           </div>
           <div class="sectionwrapper">
             <div class="postcontent"><%= post.post_content %></div>
           </div>
-          <div class="sectionwrapper">
-
+          <div class="sectionwrapper thumbrow">
                 <% post.images.each do |image| %>
                 <div class="thumbcontainer">
                     <%= link_to (image_tag image.file.url(:medium)),  image.file.url, :class => "imagethumb" %>
                 </div>
                 <% end %>
-            </div>
+          </div>
+          <div class="sectionwrapper sharerow">
+            <span class="botbuttons favbutton"></span>
+            <span class="botbuttons sharebutton"></span>
+
+          </div>
           </div>
       </div>
   <% end %>

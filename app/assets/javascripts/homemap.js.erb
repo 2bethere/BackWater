@@ -115,22 +115,50 @@ function setupFormsAndLinks(){
     });
     // Picture box
     $(document).on("click",".imagethumb",function(e){
-        console.log(e.target.parentNode.href);
         var postPos = $("#boxoverlay").offset();
-        $("#picturebox").html('<span class="helper"></span><img src="'+e.target.parentNode.href +'" width="100%" />');
-        $("#picturebox").offset({top: 60, left: (postPos.left + 700)});
-        $("#picturebox").show();
-        $("#closebutton").show();
-        var closeOffset = $("#picturebox img").offset();
-        closeOffset.left -=30;
-        closeOffset.top -=30;
-        $("#closebutton").offset(closeOffset);
+
+
+        var img = $("<img />").attr('src', e.target.parentNode.href)
+                .load(function() {
+                    if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
+                        alert('broken image!');
+                    } else {
+                        $("#picturebox").hide();
+                        $("#picturebox").html('<span class="helper"></span>');
+
+                        if($("#boxoverlay").offset().left>window.innerWidth/2)
+                        {
+                            $("#picturebox").css({top: 80, left: (180)});
+                            $("#picturebox").innerWidth(window.innerWidth -  1000);
+                        }else{
+                            $("#picturebox").css({top: 80, left: (postPos.left + 540)});
+                            $("#picturebox").innerWidth(window.innerWidth - postPos.left - 600);
+                        }
+
+                        $("#picturebox").innerHeight(window.innerHeight - 120);
+
+                        $("#picturebox").append(img);
+                        $("#picturebox").fadeIn();
+                        $("#closebutton").hide();
+                        var closeOffset = $("#picturebox img").offset();
+
+                        console.log(closeOffset);
+                        $("#closebutton").css({top: closeOffset.top-20, left:closeOffset.left-20});
+                        $("#closebutton").fadeIn();
+                    }
+                });
+
+
+
         return false;
     });
     // Close image
     $(document).on("click","#closebutton",function(e){
-        $("#closebutton").hide();
-        $("#picturebox").html('');
+        $("#closebutton").fadeOut();
+        $("#picturebox").fadeOut(400,function(){
+            $("#picturebox").html('');
+        });
+
     });
     // My post click
     $(document).on("click",".mypostrow",function(e){
@@ -161,7 +189,7 @@ function setupNavLinkClick(){
                     $("#boxoverlay").html(result);
                     $("#boxoverlay").slideDown("slow");
                     console.log("new page loaded, applying fullpage scroll");
-                    console.log($('#fullpage'));
+                    resizeBoxOverlay();
                     $('#fullpage').fullpage(
                             {verticalCentered:false,
                                 navigation:true,
@@ -178,21 +206,20 @@ function setupNavLinkClick(){
                     $("#boxoverlay").slideDown("slow");
                 })
                 .always(function() {
-                    $("#boxoverlay").offset({ top: 45, left: t.offset().left });
-
+                    $("#boxoverlay").css({ top: 35, left: t.offset().left -140 });
                 });
     });
 }
 
 function loadPostUrl(postid) {
     var url = "/posts/list/"+postid;
+
     $.ajax( url )
             .done(function(result) {
                 $("#boxoverlay").html(result);
                 $("#boxoverlay").slideDown("slow");
-
                 console.log("new page loaded, applying fullpage scroll");
-                console.log($('#fullpage'));
+                resizeBoxOverlay();
                 $('#fullpage').fullpage(
                         {verticalCentered:false,
                             navigation:true,
@@ -203,7 +230,19 @@ function loadPostUrl(postid) {
                         });
                 setupLocationComplete();
                 renderPostGraph(null, 0);
+            })
+            .fail(function(result) {
+                $("#boxoverlay").load("/users/sign_in");
+                $("#boxoverlay").slideDown("slow");
+            })
+            .always(function() {
+                $("#boxoverlay").css({ top: 35, left: $("nav").find("li").last().offset().left - 140 });
             });
+}
+
+function resizeBoxOverlay()
+{
+    $("#boxoverlay").innerHeight(window.innerHeight-35);
 }
 
 function offsetCenter(latlng,offsetx,offsety) {
@@ -282,6 +321,11 @@ function setupLocationComplete(){
 }
 
 function renderPostGraph(anchorLink, index) {
+    $("#closebutton").hide();
+    $("#picturebox").fadeOut(1000,function(){
+        $("#picturebox").html('');
+    });
+
     console.log("Render graph");
     var target = $(".section")[index - 1];
     var data_element = $(target).find(".datacontainer").html();
@@ -297,6 +341,7 @@ function renderPostGraph(anchorLink, index) {
             target = $(".datacontainer").parent();
         }
     };
+    // Set locations
     try{
         var data = JSON.parse(data_element);
         var svg_node = $(target).find("#grapharea");
@@ -335,8 +380,8 @@ function renderPostGraph(anchorLink, index) {
         var cholera_group = vis.append("g");
 
         var arc = d3.svg.arc()
-            .innerRadius(60)
-            .outerRadius(80);
+                .innerRadius(60)
+                .outerRadius(80);
 
         var pie = d3.layout.pie()
                 .startAngle(-120/180*Math.PI)
@@ -363,16 +408,19 @@ function renderPostGraph(anchorLink, index) {
 
         console.log("Append image");
         cholera_group.selectAll("image")
-            .data([0])
-            .enter()
-            .append("image")
-            .attr("xlink:href", '<%= asset_path 'cholera.png' %>')
-            .attr("x", "90")
-            .attr("y", "125")
-            .attr("width", "60")
-            .attr("height", "60");
+                .data([0])
+                .enter()
+                .append("image")
+                .attr("xlink:href", '<%= asset_path 'cholera.png' %>')
+                .attr("x", "90")
+                .attr("y", "125")
+                .attr("width", "60")
+                .attr("height", "60");
 
-        if(data["cholera_o1"]||data["cholera_o139"])
+        if(data["cholera_o1"]=="0" && data["cholera_o139"]=="0")
+        {
+            var label = "SAFE";
+        }else if (data["cholera_o1"]>1 || data["cholera_o139"]>1)
         {
             var label = "RISK";
         }else{
@@ -426,7 +474,7 @@ function renderPostGraph(anchorLink, index) {
                 .enter().append("g");
 
         g.append("path")
-                .style("fill", function(d) { console.log(d); return d.data.color; })
+                .style("fill", function(d) { return d.data.color; })
                 .attr("transform", "translate(350,100)")
                 .transition().delay(function(d, i) { return i * 200; }).duration(200)
                 .ease("linear")
@@ -581,7 +629,7 @@ function renderPostGraph(anchorLink, index) {
                 .enter().append("g");
 
         g.append("path")
-                .style("fill", function(d) { console.log(d); return d.data.color; })
+                .style("fill", function(d) { return d.data.color; })
                 .attr("transform", "translate(350,300)")
                 .transition().delay(function(d, i) { return i * 200; }).duration(200)
                 .ease("linear")
@@ -626,36 +674,75 @@ function renderPostGraph(anchorLink, index) {
         var line_group = vis.append("g");
 
         // define dimensions of graph
-        var m = [80, 80, 80, 80]; // margins
-        var w = 1000 - m[1] - m[3]; // width
-        var h = 400 - m[0] - m[2]; // height
+        var g_width = 410; // width
+        var g_height = 120; // height
 
-        var plotdata = [3, 6, 2, 7, 5, 2, 0, 3, 8, 9, 2, 5, 9, 3, 6, 3, 6, 2, 7, 5, 2, 1, 3, 8, 9, 2, 5, 9, 2, 7];
+        // scaling functions
+        var mapx = d3.scale.linear().domain([0, 6]).range([0, g_width]);
+        var mapy = d3.scale.linear().domain([0, 10]).range([g_height, 0]);
 
-
-        var x = d3.scale.linear().domain([0, data.length]).range([0, w]);
-
-        var y = d3.scale.linear().domain([0, 10]).range([h, 0]);
-
-
-        var line = d3.svg.line()
+        var linefunc = d3.svg.line()
                 .x(function (d, i) {
-                    return x(i);
+                    return mapx(i);
                 })
                 .y(function (d) {
-                    return y(d);
+                    return mapy(d);
+                })
+                .interpolate("basis");
+
+        line_group.attr("transform", "translate(30,400)");
+        // create left yAxis
+        var yAxisLeft = d3.svg.axis().scale(mapy).ticks(4).orient("right")
+                .tickFormat(function (d) {
+                    return d === 10
+                            ? d + " million people"
+                            : d;
                 });
-        line_group.selectAll("path")
-                .append("path")
-                .attr("d",line(plotdata))
-                .attr("transform", "translate(0,0)");
+        // Add the y-axis to the left
+        line_group.append("g")
+                .attr("class", "y axis")
+                .attr("transform", "translate(0,0)")
+                .call(yAxisLeft);
+
+        var xAxis = d3.svg.axis().scale(mapx).ticks(6).orient("bottom")
+                .tickFormat(function (d) {
+                    return d === 0
+                            ? "Risk scale"
+                            : d;
+                });
+        // Add the x-axis to the bottom
+        line_group.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + g_height + ")")
+                .call(xAxis);
+        //  line
+        plotData = [[3, 4, 6, 7, 5, 2, 1],[2, 2, 3, 4, 7, 6, 4],[2, 8, 6, 4, 3, 2, 1],[2, 4, 6, 8, 6, 4, 1]];
+        var plotColor = ["#2B3990","#CD539E", "#47C4BE", "#E8942A"];
+        for (var i = 0; i<plotData.length; i++)
+        {
+            var temp_group = line_group.append("g");
+            var line_temp = temp_group.append("path")
+                    .attr("d",linefunc(plotData[i]))
+                    .style("stroke-width","2")
+                    .style("stroke",plotColor[i])
+                    .style("fill","none");
+            var totalLength = line_temp.node().getTotalLength();
+            line_temp
+                    .attr("stroke-dasharray", totalLength + " " + totalLength)
+                    .attr("stroke-dashoffset", totalLength)
+                    .transition()
+                    .delay(i*500)
+                    .duration(1000)
+                    .ease("cubic-out")
+                    .attr("stroke-dashoffset", 0);
+        }
+
 
         //set locations
         var address = data["location"];
         geocoder.geocode( { 'address': address}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 console.log("Geocode");
-                console.log(results[0]);
                 offsetCenter(results[0].geometry.location,400);
 
             } else {
@@ -666,7 +753,6 @@ function renderPostGraph(anchorLink, index) {
     }catch(err){
         console.log(err);
     }
-    // Set locations
 
 }
 
@@ -677,6 +763,7 @@ function updateWindow(){
     svg.attr("width", x).attr("height", y);
     // Update main stage's box layouts
     setupBox();
+    resizeBoxOverlay();
 }
 
 

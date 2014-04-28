@@ -5,7 +5,9 @@
 <div class="boxcontainer">
   <div class="boxpanel">
     <div class="box" id="boxmission">
-      Our mission
+      <div class="textbox">
+      <%= image_tag("test/mission.png")%>
+      </div>
     </div>
     <div class="box" id="boxnewsfeed">
       <%= render 'layouts/navigation' %>
@@ -16,13 +18,19 @@
       <div id="map-canvas"></div>
     </div>
     <div class="box" id="boxkit">
-      Request kit
+      <div class="textbox">
+        <%= image_tag("test/kit.png")%>
+      </div>
     </div>
     <div class="box" id="boxdata">
-      Data
+      <div class="textbox">
+        <%= image_tag("test/data.png")%>
+      </div>
     </div>
     <div class="box" id="boxdata">
-
+      <div class="textbox">
+        <%= image_tag("test/signin.png")%>
+      </div>
         <% if user_signed_in? %>
             <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
         <% else %>

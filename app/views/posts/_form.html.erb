@@ -14,36 +14,90 @@
         </div>
     <% end %>
 
-
-    <div class="sectiontitle">Your story</div>
     <div class="inputwrapper sectionwrapper">
-        <%= f.text_area :post_content%>
+      <%= f.label "Share your story" %>
+      <%= f.text_area :post_content,:placeholder => "What's happening?"%>
     </div>
 
-    <div class="sectiontitle">Test results</div>
     <div class="sectionwrapper">
+      <%= f.label "Enter date" %>
+      <div class="dateselectfields">
+        <%= f.date_select(:created_at,:start_year => 1960,  order: [ :month, :day, :year]) %>
+      </div>
+    </div>
+    <div class="sectionwrapper">
+      <%= f.label "Enter location" %>
+      <%= f.text_field :location, :class => "locationinput"%>
+    </div>
+
+
+    <div class="sectionwrapper">
+      <%= f.label "Add pictures" %><br/>
+      <%= f.fields_for :images do |i| %>
+          <% if i.object.new_record? %>
+              <%= i.file_field :file , :multiple => true%>
+          <% else %>
+              <div class="imagescontainer sectionwrapper">
+                <% @post.images.each do |image| %>
+                    <%= image_tag image.file.url %>
+                <% end %>
+              </div>
+
+          <% end %>
+      <% end %>
+    </div>
+
+    <div class="sectionwrapper">
+      <%= f.label "Record test results" %>
+      </div>
+    <div class="sectionwrapper">
+
       <div class="testresultbox">
         <div class="testtitleimg mid"><%= image_tag("cholera.png") %></div>
         <div id="o1group">
-          <label><div id="cholerao1positive"><%= f.radio_button :test_result_cholera_o1, "2" %></div></label>
-          <label><div id="cholerao1negative"><%= f.radio_button :test_result_cholera_o1, "1" %></div></label>
-          <label><div id="cholerao1noresult"><%= f.radio_button :test_result_cholera_o1, "0" %></div></label>
+          <label>
+            <div id="cholerao1positive">
+              <span class="helper"></span>
+              <%= f.radio_button :test_result_cholera_o1, "2" %>
+              <%= image_tag("form/cpositive.png", :class=>"radioimg") %>
+            </div></label>
+          <label><div id="cholerao1negative">
+            <span class="helper"></span>
+            <%= f.radio_button :test_result_cholera_o1, "1" %>
+            <%= image_tag("form/cneu.png", :class=>"radioimg") %>
+          </div></label>
+          <label><div id="cholerao1noresult">
+            <span class="helper"></span>
+            <%= f.radio_button :test_result_cholera_o1, "0" %>
+            <%= image_tag("form/cneg.png", :class=>"radioimg") %>
+          </div></label>
         </div>
         <div id="o139group">
-          <label><div id="cholerao139positive"><%= f.radio_button :test_result_cholera_o139, "2" %></div></label>
-          <label><div id="cholerao139negative"><%= f.radio_button :test_result_cholera_o139, "1" %></div></label>
-          <label><div id="cholerao139noresult"><%= f.radio_button :test_result_cholera_o139, "0" %></div></label>
+          <label><div id="cholerao139positive">
+            <span class="helper"></span>
+            <%= f.radio_button :test_result_cholera_o139, "2" %>
+            <%= image_tag("form/cpositive.png", :class=>"radioimg") %>
+          </div></label>
+          <label><div id="cholerao139negative">
+            <span class="helper"></span>
+            <%= f.radio_button :test_result_cholera_o139, "1" %>
+            <%= image_tag("form/cneu.png", :class=>"radioimg") %>
+          </div></label>
+          <label><div id="cholerao139noresult">
+            <span class="helper"></span>
+            <%= f.radio_button :test_result_cholera_o139, "0" %>
+            <%= image_tag("form/cneg.png", :class=>"radioimg") %></div></label>
         </div>
       </div>
       <div class="testresultbox">
         <div class="testtitleimg mid"><%= image_tag("nitrite.png") %></div>
         <div class="choicegroup">
-            <label><div class="choicebox" id="nitrite6"><%= f.radio_button :test_result_nitrite, "6" %></div></label>
-            <label><div class="choicebox" id="nitrite5"><%= f.radio_button :test_result_nitrite, "5" %></div></label>
-            <label><div class="choicebox" id="nitrite4"><%= f.radio_button :test_result_nitrite, "4" %></div></label>
-            <label><div class="choicebox" id="nitrite3"><%= f.radio_button :test_result_nitrite, "3" %></div></label>
-            <label><div class="choicebox" id="nitrite2"><%= f.radio_button :test_result_nitrite, "2" %></div></label>
-            <label><div class="choicebox" id="nitrite1"><%= f.radio_button :test_result_nitrite, "1" %></div></label>
+          <label><div class="choicebox" id="nitrite6"><%= f.radio_button :test_result_nitrite, "6" %></div></label>
+          <label><div class="choicebox" id="nitrite5"><%= f.radio_button :test_result_nitrite, "5" %></div></label>
+          <label><div class="choicebox" id="nitrite4"><%= f.radio_button :test_result_nitrite, "4" %></div></label>
+          <label><div class="choicebox" id="nitrite3"><%= f.radio_button :test_result_nitrite, "3" %></div></label>
+          <label><div class="choicebox" id="nitrite2"><%= f.radio_button :test_result_nitrite, "2" %></div></label>
+          <label><div class="choicebox" id="nitrite1"><%= f.radio_button :test_result_nitrite, "1" %></div></label>
         </div>
       </div>
     </div>
@@ -64,30 +118,14 @@
         <label><div class="choicebox" id="arsenic1"><%= f.radio_button :test_result_arsenic, "1" %></div></label>
       </div>
     </div>
-    <div class="sectiontitle">Location</div>
-    <div class="sectionwrapper">
-      <%= f.label :location %>:
-      <%= f.text_field :location%>
-    </div>
 
-    <div class="sectiontitle">Images</div>
 
-    <div class="sectionwrapper">
-        <%= f.fields_for :images do |i| %>
-            <% if i.object.new_record? %>
-                <%= i.file_field :file , :multiple => true%>
-            <% else %>
-              <div class="imagescontainer sectionwrapper">
-                  <% @post.images.each do |image| %>
-                      <%= image_tag image.file.url %>
-                  <% end %>
-              </div>
 
-            <% end %>
-        <% end %>
-    </div>
+
+
+
 
     <div class="mid submitwrapper">
-        <%= f.submit "Submit" %>
+      <%= f.submit "" %>
     </div>
 <% end %>

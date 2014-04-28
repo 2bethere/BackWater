@@ -6,7 +6,14 @@
             <div class="mypostrow">
               <div class="datacontainer"><%= post.id %></div>
               <div class="mypostinfo">
-                <div class="mypostlocation"><%= post.location || "No location" %></div>
+
+                <div class="mypostlocation sectiontitleleft">
+                  <% if post.location.blank? %>
+                      No location
+                  <% else %>
+                      <%= post.location %>
+                  <% end %>
+                </div>
                 <div class="mypostdate"><%= l(post.created_at, :format => "%m/%d/%Y") %></div>
               </div>
               <div class="myposticon">
