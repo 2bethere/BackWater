@@ -112,6 +112,15 @@ body {
 #menubuttonsignin {
   background-image:image-url("menu/signin_gray.png");
 }
+
+#menubuttonloadhelper {
+  background-image:image-url("menu/ourmission_blue.png");
+  background-image:image-url("menu/newsfeed_blue.png");
+  background-image:image-url("menu/requestkit_blue.png");
+  background-image:image-url("menu/exportdata_blue.png");
+  background-image:image-url("menu/signin_blue.png");
+}
+
 // Main logo
 .logocontainer {
   margin-left: 30px;
@@ -330,7 +339,7 @@ nav {
 }
 
 #crossoverlay {
-  background-image: image-url("cross.png");
+  //background-image: image-url("cross.png");
   position: fixed;
   width: 100%;
   height: 100%;
