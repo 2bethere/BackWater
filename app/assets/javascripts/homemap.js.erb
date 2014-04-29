@@ -91,14 +91,11 @@ function moveBoxToIndex(targetIndex)
     }, 1000);
     // Menu icons
     // Reset all icons to gray
-    $(".menubutton").children(".menubuttonicon").css("background-image", function(index, value){
-    return value.replace("blue","gray");
-    });
+
+    $(".menubutton").children(".menubuttonicon").removeClass("menubuttonblue0 menubuttonblue1 menubuttonblue2 menubuttonblue3 menubuttonblue4");
     // blue icon
 
-    var bgurl = $($(".menubutton")[targetIndex]).children(".menubuttonicon").css("background-image");
-    var result = bgurl.replace("gray","blue");
-    $($(".menubutton")[targetIndex]).children(".menubuttonicon").css("background-image",result);
+    $($(".menubutton")[targetIndex]).children(".menubuttonicon").addClass("menubuttonblue"+targetIndex);
     // reset all text
     $(".menubuttontext").removeClass("menubuttontextactive");
     //blue text

@@ -95,38 +95,41 @@ body {
   color: $color-primary;
 }
 
-#menubuttonmission {
+.menubuttonmission {
   background-image:image-url("menu/ourmission_gray.png");
 }
-#menubuttonnews {
+.menubuttonnews {
   background-image:image-url("menu/newsfeed_gray.png");
 }
 
-#menubuttonkit {
+.menubuttonkit {
   background-image:image-url("menu/requestkit_gray.png");
 }
 
-#menubuttonexport {
+.menubuttonexport {
   background-image:image-url("menu/exportdata_gray.png");
 }
-#menubuttonsignin {
+.menubuttonsignin {
   background-image:image-url("menu/signin_gray.png");
 }
 
-#menubuttonloadhelper1 {
+.menubuttonblue0 {
   background-image:image-url("menu/ourmission_blue.png");
 }
-#menubuttonloadhelper2 {
+.menubuttonblue1 {
   background-image:image-url("menu/newsfeed_blue.png");
 }
-#menubuttonloadhelper3 {
+.menubuttonblue2 {
   background-image:image-url("menu/requestkit_blue.png");
 }
-#menubuttonloadhelper4 {
+.menubuttonblue3 {
   background-image:image-url("menu/exportdata_blue.png");
 }
-#menubuttonloadhelper5 {
+.menubuttonblue4 {
   background-image:image-url("menu/signin_blue.png");
+}
+.menuhelperhide {
+  display: none;
 }
 
 // Main logo
