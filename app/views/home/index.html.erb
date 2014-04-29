@@ -2,8 +2,6 @@
     <%= javascript_include_tag 'homemap' %>
     <%= javascript_include_tag 'topojson.v1.min' %>
 <% end %>
-<div class="menuhelperhide menubuttonloadhelper1 menubuttonloadhelper2 menubuttonloadhelper3 menubuttonloadhelper4 menubuttonloadhelper5">
-</div>
 <div class="boxcontainer">
   <div class="boxpanel">
     <div class="box" id="boxmission">
@@ -29,16 +27,14 @@
         <%= image_tag("test/data.png")%>
       </div>
     </div>
-    <div class="box" id="boxdata">
-      <div class="textbox">
-        <%= image_tag("test/signin.png")%>
-      </div>
-        <% if user_signed_in? %>
-            <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
-        <% else %>
-            <%= link_to 'Login', new_user_session_path %>
-        <% end %>
+    <div class="box" id="boxsignin">
 
+      <div class="singlepanel">
+
+        <%= render 'layouts/session' %>
+      </div>
+
+      <!---->
     </div>
   </div>
 </div>

@@ -1,0 +1,23 @@
+<div class="sectionwrapper">
+  <div class="loginform">
+  <%= form_for(:user, :url => session_path(:user)) do |f| %>
+      <div class="loginfield">
+          <%= f.label :email %>
+          <%= f.email_field :email %>
+      </div>
+
+      <div class="loginfield">
+          <%= f.label :password %>
+          <%= f.password_field :password %>
+      </div>
+      <div class="loginfield">
+        <%= f.label :remember_me %>
+        <%= f.check_box :remember_me %>
+      </div>
+      <%= f.submit '', :class => "signinbutton" %>
+  <% end %>
+  <%= link_to 'Sign up', new_registration_path(:user) %>
+  <%= link_to "Forgot password?", new_password_path(:user) %>
+  <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
+  </div>
+</div>

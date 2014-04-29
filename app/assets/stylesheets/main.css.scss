@@ -241,6 +241,13 @@ nav {
   margin-left: 0px;
   padding: 0px;
 }
+.singlepanel {
+  width: 500px;
+  height: 100%;
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
 
 // New feed page box
 #boxoverlay {
@@ -440,6 +447,15 @@ nav {
   width: 54px;
   height: 54px;
   border: none;
+}
+
+.signinbutton {
+  background: image-url("button/submit.png") no-repeat;
+  cursor:pointer;
+  width: 54px;
+  height: 54px;
+  border: none;
+
 }
 
 .dateselectfields {
@@ -794,4 +810,20 @@ nav {
 
 .textbox img {
   display: inline-block;
+}
+
+.loginfield {
+  width: 480px;
+  height: 50;
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+.loginfield input {
+  border: 2px solid $color-primary;
+  width: 100%;
+  font-size: 16pt;
+}
+.loginform {
+  margin-top:300px;
 }

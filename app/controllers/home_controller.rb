@@ -12,4 +12,6 @@ class HomeController < ApplicationController
     params.require(:id)
   end
 
+
+
 end
