@@ -20,7 +20,8 @@ html {
 }
 
 body {
-  font-family: 'GothamRound', sans-serif;
+  //font-family: 'GothamRound', sans-serif;
+  font-family: 'verdana', sans-serif;
   color: $color-primary;
   width: 100%;
   height: 100%;
@@ -177,7 +178,7 @@ nav {
   position: absolute;
   padding: 0px;
   top: 0px;
-  left: 0px;
+  left: 15px;
   z-index: 1001;
 }
 
@@ -212,7 +213,8 @@ nav {
 .navmid li {
   text-align: left;
   color: $color-primary;
-  font-size: 18pt;
+  font-size: 14pt;
+  padding-top: 7px;
   list-style-type: none;
   width: 500px;
   height: 35px;
@@ -221,6 +223,7 @@ nav {
   background-color: rgba(203,203,203,0.5);
   cursor: pointer;
   margin-right: 15px;
+
   box-sizing:border-box;
   -moz-box-sizing:border-box;
   -webkit-box-sizing:border-box
@@ -244,15 +247,16 @@ nav {
 .singlepanel {
   width: 500px;
   height: 100%;
-  position: relative;
+  position: absolute;
   top: 0px;
   left: 0px;
+  border-right: 1px solid $color-darkgray;
 }
 
 // New feed page box
 #boxoverlay {
   width: 500px;
-  height: 100%;
+  height: 90%;
   max-height: 1035px;
   position: absolute;
   top: 0px;
@@ -381,13 +385,13 @@ nav {
   margin: 0px 0px;
   background-color: #FFF;
   color: $color-primary;
-  height: 35px;
-  font-size: 14pt;
+  height: 30px;
+  font-size: 12pt;
   font-weight: bold;
   clear:both;
-  padding-top: 12px;
+  padding-top: 8px;
   padding-left: 30px;
-  border-bottom: 1px solid $color-darkgray;
+  border-bottom: 1px solid #ECECEC;
 }
 
 .sectiontitleleft {
@@ -408,13 +412,13 @@ nav {
   color: $color-darkgray;
   padding-right: 30px;
   font-weight: normal;
-  font-size: 14pt;
+  font-size: 12pt;
 }
 
 .inputwrapper textarea{
   width: 460px;
-  min-height: 120px;
-  font-size: 12pt;
+  min-height: 100px;
+  font-size: 10pt;
   resize: vertical;
   border: 1px solid $color-primary;
   box-sizing: border-box;
@@ -423,7 +427,7 @@ nav {
 }
 
 .locationinput {
-  font-size: 12pt;
+  font-size: 10pt;
   border: 1px solid $color-primary;
   padding: 4px;
   width: 460px;
@@ -433,7 +437,8 @@ nav {
 }
 
 .new_post label {
-  font-weight: bold;
+  font-size: 10pt;
+  display: block;
 }
 
 .new_post input[type="file"] {
@@ -449,13 +454,20 @@ nav {
   border: none;
 }
 
+.inputlabel {
+  margin-bottom: 4px;
+}
+
+
 .signinbutton {
   background: image-url("button/submit.png") no-repeat;
   cursor:pointer;
   width: 54px;
   height: 54px;
   border: none;
-
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 .dateselectfields {
@@ -468,14 +480,14 @@ nav {
   -webkit-appearance: none;  /*Removes default chrome and safari style*/
   -moz-appearance: none; /* Removes Default Firefox style*/
   background: image-url('button/dropdown.png') no-repeat;  /*Adds background-image*/
-  background-position: 120px 12px;  /*Position of the background-image*/
-  width: 140px; /*Width of select dropdown to give space for arrow image*/
+  background-position: 120px 10px;  /*Position of the background-image*/
+  width: 142px; /*Width of select dropdown to give space for arrow image*/
   text-indent: 0.01px; /* Removes default arrow from firefox*/
   text-overflow: "";  /*Removes default arrow from firefox*/
   text-align: right;
   padding-right: 10px;
-  font-size: 12pt;
-  height: 30px;
+  font-size: 10pt;
+  height: 26px;
   color: #979797;
   border-radius: 0px;
 }
@@ -519,11 +531,9 @@ nav {
 
 #o1group div {
 
-  height: 40px;
+  height: 46px;
   width: 80px;
   background-color: #EEE;
-  margin-top: 10px;
-  margin-bottom: 10px;
 
 }
 #o1group input{
@@ -538,16 +548,26 @@ nav {
 
 #o139group div {
   vertical-align: middle;
-  height: 40px;
+  height: 46px;
   width: 80px;
   background-color: #EEE;
-  margin-top: 10px;
-  margin-bottom: 10px;
+
 }
 
 #o139group input{
   margin-top: 12px;
 }
+
+.choleratypetext {
+  width: 80px !important;
+  height: 16px !important;
+  color: #000;
+  background-color: transparent !important;
+  font-size: 10pt;
+  text-align: center;
+  padding-left: 10px;
+}
+
 
 .choicebox {
   height: 23px;
@@ -619,7 +639,7 @@ nav {
 }
 
 .choicegroup {
-  margin-top: 12px;
+  margin-top: 16px;
 }
 
 .datacontainer {
@@ -643,7 +663,7 @@ nav {
 #grapharea {
   position: relative;
   width: 500px;
-  height: 550px;
+  height: 480px;
 }
 
 .postcontent {
@@ -651,9 +671,12 @@ nav {
   margin-right: 14px;
   min-height: 40px;
   color: #000;
+  font-size: 10pt;
 }
 .thumbrow {
   height: 60px;
+  position: absolute;
+  bottom: 120px;
 }
 .thumbcontainer {
   width: 100px;
@@ -672,7 +695,7 @@ nav {
   height: 30px;
   width: 100%;
   position: absolute;
-  bottom: 20px;
+  bottom: 30px;
   right: 0px;
   padding-right: 10px;
 }
@@ -699,6 +722,7 @@ nav {
   height: 80px;
   background-color: #FFF;
   border-bottom: 1px solid #CBCACA;
+
 }
 
 .mypostrow:hover {
@@ -714,12 +738,14 @@ nav {
   padding-left: 16px;
   padding-right: 16px;
   color: $color-primary;
-  font-size: 14pt;
+  font-size: 12pt;
   height: 16px;
 }
 
 .mypostlocation {
   float: left;
+  font-weight: 700;
+  padding-left: 16px;
 }
 .mypostdate {
   float: right;
@@ -736,7 +762,7 @@ nav {
   clear: both;
   margin-right: 8px;
   height: 26px;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 
 .icon {
@@ -774,6 +800,10 @@ nav {
 }
 .icon6b {
   background-image: image-url("list/arsenic_list_blue.png");
+}
+
+.iconstar {
+  background-image: image-url("button/fav.png");
 }
 
 .axis {
@@ -817,13 +847,42 @@ nav {
   height: 50;
   font-size: 12pt;
   font-weight: bold;
+  text-align: left;
+  clear:both;
 }
 
-.loginfield input {
-  border: 2px solid $color-primary;
-  width: 100%;
-  font-size: 16pt;
+.loginfield label {
+  width: 30%;
+  float:left;
 }
+
+.loginfield input[type=email],input[type=password] {
+  border: 2px solid $color-primary;
+  width: 460px;
+  font-size: 20pt;
+}
+
+.loginfield input[type=checkbox] {
+  float:left;
+  width: 20px;
+}
+
 .loginform {
   margin-top:300px;
+}
+
+.loginlink li{
+  font-size: 14pt;
+  list-style-type: none;
+}
+
+.loginlink a{
+  color: $color-primary;
+  text-decoration: none;
+  display: table-row;
+}
+
+.loginlink a:hover{
+  color: #0088FF;
+
 }

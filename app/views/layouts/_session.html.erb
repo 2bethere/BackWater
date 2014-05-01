@@ -1,5 +1,7 @@
 <div class="sectionwrapper">
+
   <div class="loginform">
+    <div class="sectiontitleleft">Login to submit data and request test kit</div>
   <%= form_for(:user, :url => session_path(:user)) do |f| %>
       <div class="loginfield">
           <%= f.label :email %>
@@ -14,10 +16,19 @@
         <%= f.label :remember_me %>
         <%= f.check_box :remember_me %>
       </div>
+        <div class="loginfield">
       <%= f.submit '', :class => "signinbutton" %>
+        </div>
   <% end %>
-  <%= link_to 'Sign up', new_registration_path(:user) %>
-  <%= link_to "Forgot password?", new_password_path(:user) %>
-  <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
+    <br/><br/>
+    <!--
+  <div class="sectiontitleleft">Need help?</div>
+    <div class="loginlink">
+        <%= link_to 'Sign up', new_registration_path(:user) %>
+        <%= link_to "Forgot password?", new_password_path(:user) %>
+        <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
+    </div>
+
+  -->
   </div>
 </div>

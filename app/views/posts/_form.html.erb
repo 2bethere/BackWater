@@ -15,24 +15,24 @@
     <% end %>
 
     <div class="inputwrapper sectionwrapper">
-      <%= f.label "Share your story" %>
+      <%= f.label "Share your story" ,:class =>"inputlabel" %>
       <%= f.text_area :post_content,:placeholder => "What's happening?"%>
     </div>
 
     <div class="sectionwrapper">
-      <%= f.label "Enter date" %>
+      <%= f.label "Enter date" ,:class =>"inputlabel" %>
       <div class="dateselectfields">
         <%= f.date_select(:created_at,:start_year => 1960,  order: [ :month, :day, :year]) %>
       </div>
     </div>
     <div class="sectionwrapper">
-      <%= f.label "Enter location" %>
+      <%= f.label "Enter location" ,:class =>"inputlabel" %>
       <%= f.text_field :location, :class => "locationinput"%>
     </div>
 
 
     <div class="sectionwrapper">
-      <%= f.label "Add pictures" %><br/>
+      <%= f.label "Add pictures" ,:class =>"inputlabel" %>
       <%= f.fields_for :images do |i| %>
           <% if i.object.new_record? %>
               <%= i.file_field :file , :multiple => true%>
@@ -55,6 +55,7 @@
       <div class="testresultbox">
         <div class="testtitleimg mid"><%= image_tag("cholera.png") %></div>
         <div id="o1group">
+          <div class="choleratypetext">O1</div>
           <label>
             <div id="cholerao1positive">
               <span class="helper"></span>
@@ -73,6 +74,7 @@
           </div></label>
         </div>
         <div id="o139group">
+          <div class="choleratypetext">O139</div>
           <label><div id="cholerao139positive">
             <span class="helper"></span>
             <%= f.radio_button :test_result_cholera_o139, "2" %>
@@ -104,18 +106,22 @@
     <div class="sectionwrapper">
       <div class="testresultbox">
         <div class="testtitleimg mid"><%= image_tag("coliform.png") %></div>
+        <div class="choicegroup">
         <label><div class="coliformbox" id="coliformblue"><%= f.radio_button :test_result_coliform, "2" %></div></label>
         <label><div class="coliformbox" id="coliformyellow"><%= f.radio_button :test_result_coliform, "1" %></div></label>
         <label><div class="coliformbox" id="coliformnone"><%= f.radio_button :test_result_coliform, "0" %></div></label>
+          </div>
       </div>
       <div class="testresultbox">
         <div class="testtitleimg mid"><%= image_tag("arsenic.png") %></div>
+        <div class="choicegroup">
         <label><div class="choicebox" id="arsenic6"><%= f.radio_button :test_result_arsenic, "6" %></div></label>
         <label><div class="choicebox" id="arsenic5"><%= f.radio_button :test_result_arsenic, "5" %></div></label>
         <label><div class="choicebox" id="arsenic4"><%= f.radio_button :test_result_arsenic, "4" %></div></label>
         <label><div class="choicebox" id="arsenic3"><%= f.radio_button :test_result_arsenic, "3" %></div></label>
         <label><div class="choicebox" id="arsenic2"><%= f.radio_button :test_result_arsenic, "2" %></div></label>
         <label><div class="choicebox" id="arsenic1"><%= f.radio_button :test_result_arsenic, "1" %></div></label>
+          </div>
       </div>
     </div>
 

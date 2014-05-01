@@ -377,8 +377,7 @@ function renderPostGraph(anchorLink, index) {
         var cholera_group = vis.append("g");
 
         var arc = d3.svg.arc()
-                .innerRadius(60)
-                .outerRadius(80);
+                ;
 
         var pie = d3.layout.pie()
                 .startAngle(-120/180*Math.PI)
@@ -386,13 +385,13 @@ function renderPostGraph(anchorLink, index) {
                 .value(function() { return 1; });
 
         var g = cholera_group.selectAll()
-                .data(pie(plotData))
-                .enter().append("g");
+                .append("g");
 
 
-        g.append("path")
+        g.data(pie(plotData))
+                .enter().append("path")
                 .style("fill", function(d) { return d.data.color; })
-                .attr("transform", "translate(120,100)")
+                .attr("transform", "translate(120,80)")
                 .transition().delay(function(d, i) { return i * 600; }).duration(600)
                 .ease("linear")
                 .attrTween('d', function(d) {
@@ -410,7 +409,7 @@ function renderPostGraph(anchorLink, index) {
                 .append("image")
                 .attr("xlink:href", '<%= asset_path 'cholera.png' %>')
                 .attr("x", "90")
-                .attr("y", "125")
+                .attr("y", "90")
                 .attr("width", "60")
                 .attr("height", "60");
 
@@ -426,7 +425,7 @@ function renderPostGraph(anchorLink, index) {
         cholera_group
                 .append("text")
                 .attr("x", "90")
-                .attr("y", "105")
+                .attr("y", "85")
                 .style("font-size","18pt")
                 .text(label);
         //nitrite
@@ -457,9 +456,7 @@ function renderPostGraph(anchorLink, index) {
 
         var nitrite_group = vis.append("g");
 
-        var arc = d3.svg.arc()
-                .innerRadius(60)
-                .outerRadius(80);
+        var arc = d3.svg.arc();
 
         var pie = d3.layout.pie()
                 .startAngle(-120/180*Math.PI)
@@ -472,7 +469,7 @@ function renderPostGraph(anchorLink, index) {
 
         g.append("path")
                 .style("fill", function(d) { return d.data.color; })
-                .attr("transform", "translate(350,100)")
+                .attr("transform", "translate(350,80)")
                 .transition().delay(function(d, i) { return i * 200; }).duration(200)
                 .ease("linear")
                 .attrTween('d', function(d) {
@@ -490,7 +487,7 @@ function renderPostGraph(anchorLink, index) {
                 .append("image")
                 .attr("xlink:href", '<%= asset_path 'nitrite.png' %>')
                 .attr("x", "321")
-                .attr("y", "125")
+                .attr("y", "90")
                 .attr("width", "60")
                 .attr("height", "60");
 
@@ -503,13 +500,13 @@ function renderPostGraph(anchorLink, index) {
         nitrite_group
                 .append("text")
                 .attr("x", "320")
-                .attr("y", "105")
+                .attr("y", "85")
                 .style("font-size","18pt")
                 .text(label);
         nitrite_group
                 .append("text")
                 .attr("x", "330")
-                .attr("y", "65")
+                .attr("y", "50")
                 .style("font-size","10pt")
                 .text(data["nitrite"]+ " ppm");
         //coliform
@@ -533,9 +530,7 @@ function renderPostGraph(anchorLink, index) {
 
         var coliform_group = vis.append("g");
 
-        var arc = d3.svg.arc()
-                .innerRadius(60)
-                .outerRadius(80);
+        var arc = d3.svg.arc();
 
         var pie = d3.layout.pie()
                 .startAngle(-120/180*Math.PI)
@@ -549,7 +544,7 @@ function renderPostGraph(anchorLink, index) {
 
         g.append("path")
                 .style("fill", function(d) { return d.data.color; })
-                .attr("transform", "translate(120,300)")
+                .attr("transform", "translate(120,250)")
                 .transition().delay(function(d, i) { return i * 600; }).duration(600)
                 .ease("linear")
                 .attrTween('d', function(d) {
@@ -567,7 +562,7 @@ function renderPostGraph(anchorLink, index) {
                 .append("image")
                 .attr("xlink:href", '<%= asset_path 'coliform.png' %>')
                 .attr("x", "90")
-                .attr("y", "320")
+                .attr("y", "270")
                 .attr("width", "60")
                 .attr("height", "60");
 
@@ -580,7 +575,7 @@ function renderPostGraph(anchorLink, index) {
         coliform_group
                 .append("text")
                 .attr("x", "90")
-                .attr("y", "305")
+                .attr("y", "255")
                 .style("font-size","18pt")
                 .text(label);
 
@@ -613,8 +608,8 @@ function renderPostGraph(anchorLink, index) {
         var arsenic_group = vis.append("g");
 
         var arc = d3.svg.arc()
-                .innerRadius(60)
-                .outerRadius(80);
+                .innerRadius(50)
+                .outerRadius(70);
 
         var pie = d3.layout.pie()
                 .startAngle(-120/180*Math.PI)
@@ -627,7 +622,7 @@ function renderPostGraph(anchorLink, index) {
 
         g.append("path")
                 .style("fill", function(d) { return d.data.color; })
-                .attr("transform", "translate(350,300)")
+                .attr("transform", "translate(350,250)")
                 .transition().delay(function(d, i) { return i * 200; }).duration(200)
                 .ease("linear")
                 .attrTween('d', function(d) {
@@ -645,7 +640,7 @@ function renderPostGraph(anchorLink, index) {
                 .append("image")
                 .attr("xlink:href", '<%= asset_path 'arsenic.png' %>')
                 .attr("x", "322")
-                .attr("y", "320")
+                .attr("y", "270")
                 .attr("width", "60")
                 .attr("height", "60");
         if(data["arsenic"] >= 2)
@@ -657,13 +652,13 @@ function renderPostGraph(anchorLink, index) {
         arsenic_group
                 .append("text")
                 .attr("x", "320")
-                .attr("y", "305")
+                .attr("y", "255")
                 .style("font-size","18pt")
                 .text(label);
         arsenic_group
                 .append("text")
                 .attr("x", "330")
-                .attr("y", "265")
+                .attr("y", "220")
                 .style("font-size","10pt")
                 .text(data["arsenic"]+ " ppm");
 
@@ -687,7 +682,7 @@ function renderPostGraph(anchorLink, index) {
                 })
                 .interpolate("basis");
 
-        line_group.attr("transform", "translate(30,400)");
+        line_group.attr("transform", "translate(30,340)");
         // create left yAxis
         var yAxisLeft = d3.svg.axis().scale(mapy).ticks(4).orient("right")
                 .tickFormat(function (d) {
@@ -770,7 +765,7 @@ window.onresize = updateWindow;
 $( document ).ready(function() {
     updateWindow();
     setupBox();
-    moveBoxToIndex(1); // 0 based index
+    moveBoxToIndex(1); // 0 based i ndex
     setupNavLinkClick();
     setupFormsAndLinks();
     loadScript();
