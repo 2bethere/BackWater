@@ -23,6 +23,8 @@ db/*.sqlite3
 
 # various artifacts
 **.war
+*.mp4
+*.webm
 *.rbc
 *.sassc
 .rspec

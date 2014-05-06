@@ -19,12 +19,31 @@
     </div>
     <div class="box" id="boxkit">
       <div class="textbox">
-        <%= image_tag("test/kit.png")%>
+        <div class="requestkitoverlay">
+            <div class="requestkitcontainer">
+              <div class="requestkitbutton">
+                Request Kits
+              </div>
+              <div class="requestkitform">
+                <div class="formrow">Name:</div>
+                <div class="formrow">Address:</div>
+                <div class="formrow">City:</div>
+                <div class="formrow">Country:</div>
+                <div class="kitformbigtext">How many do you need?</div>
+                <div id="slider"></div>
+                <div id="amount"></div>
+                <div class="kitsubmit"></div>
+              </div>
+            </div>
+        </div>
+        <%= video_tag ["DemoMainLQ.mp4","DemoMainLQ.webm"], :controls => false, :autoplay=>true, :muted=>true, :id=>'kitvideo', :loop=>true %>
       </div>
+
     </div>
     <div class="box" id="boxdata">
       <div class="textbox">
-        <%= image_tag("test/data.png")%>
+        <%= image_tag ("test/data.png"), :id=>'exportdataimg'%>
+        <div id="showreel"></div>
       </div>
     </div>
     <div class="box" id="boxsignin">
