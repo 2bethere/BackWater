@@ -421,7 +421,7 @@ function renderPostGraph(anchorLink, index) {
                 .append("image")
                 .attr("xlink:href", '<%= asset_path 'cholera.png' %>')
                 .attr("x", "90")
-                .attr("y", "90")
+                .attr("y", "100")
                 .attr("width", "60")
                 .attr("height", "60");
 
@@ -438,7 +438,7 @@ function renderPostGraph(anchorLink, index) {
                 .append("text")
                 .attr("x", "98")
                 .attr("y", "85")
-                .style("font-size","14pt")
+                .style("font-size","12pt")
                 .text(label);
         //nitrite
         plotData = undefined;
@@ -499,7 +499,7 @@ function renderPostGraph(anchorLink, index) {
                 .append("image")
                 .attr("xlink:href", '<%= asset_path 'nitrite.png' %>')
                 .attr("x", "321")
-                .attr("y", "90")
+                .attr("y", "100")
                 .attr("width", "60")
                 .attr("height", "60");
 
@@ -511,15 +511,15 @@ function renderPostGraph(anchorLink, index) {
         }
         nitrite_group
                 .append("text")
-                .attr("x", "328")
+                .attr("x", "330")
                 .attr("y", "85")
-                .style("font-size","14pt")
+                .style("font-size","12pt")
                 .text(label);
         nitrite_group
                 .append("text")
-                .attr("x", "330")
+                .attr("x", "334")
                 .attr("y", "50")
-                .style("font-size","10pt")
+                .style("font-size","8pt")
                 .text(data["nitrite"]+ " ppm");
         //coliform
         var plotData = new Array();
@@ -586,9 +586,9 @@ function renderPostGraph(anchorLink, index) {
         }
         coliform_group
                 .append("text")
-                .attr("x", "98")
+                .attr("x", "100")
                 .attr("y", "255")
-                .style("font-size","14pt")
+                .style("font-size","12pt")
                 .text(label);
 
         //arsenic
@@ -663,15 +663,15 @@ function renderPostGraph(anchorLink, index) {
         }
         arsenic_group
                 .append("text")
-                .attr("x", "328")
+                .attr("x", "330")
                 .attr("y", "255")
-                .style("font-size","14pt")
+                .style("font-size","12pt")
                 .text(label);
         arsenic_group
                 .append("text")
-                .attr("x", "330")
+                .attr("x", "334")
                 .attr("y", "220")
-                .style("font-size","10pt")
+                .style("font-size","8pt")
                 .text(data["arsenic"]+ " ppm");
 
         // Draw line graph
