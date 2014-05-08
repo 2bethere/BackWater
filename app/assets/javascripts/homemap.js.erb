@@ -78,6 +78,11 @@ function setupBox(){
 
 function moveBoxToIndex(targetIndex)
 {
+    $("#closebutton").fadeOut();
+    $("#picturebox").fadeOut(400,function(){
+        $("#picturebox").html('');
+    });
+    //
     height = window.innerHeight;
 
     $( ".boxpanel" ).animate({
@@ -140,7 +145,7 @@ function setupFormsAndLinks(){
                         var closeOffset = $("#picturebox img").offset();
 
                         console.log(closeOffset);
-                        $("#closebutton").css({top: closeOffset.top-20, left:closeOffset.left-20});
+                        $("#closebutton").css({top: closeOffset.top-10, left:closeOffset.left-10});
                         $("#closebutton").fadeIn();
                     }
                 });
@@ -757,8 +762,18 @@ function renderPostGraph(anchorLink, index) {
 
 function resizeVideo()
 {
+    var videowidth = $("#boxkit").width();
+    var videoheight = $("#boxkit").height();
+    if(videoheight > (videowidth/1280*720))
+    {
+        //stretch height;
+        $("#kitvideo").height(videoheight);
+    }
+    else{
+        //stretch width;
+        $("#kitvideo").width(videowidth-140);
+    }
 
-    $("#kitvideo").width($("#boxkit").width()-140);
 }
 
 function setupUI()

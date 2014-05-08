@@ -48,7 +48,7 @@
       <div id="crossoverlay"></div>
       <div id="boxoverlay"></div>
       <div id="picturebox"></div>
-      <div id="closebutton">X</div>
+      <div id="closebutton"></div>
       <div id="map-canvas"></div>
     </div>
     <div class="box" id="boxkit">
@@ -70,7 +70,7 @@
               </div>
             </div>
         </div>
-        <%= video_tag ["DemoMainLQ.mp4","DemoMainLQ.webm"], :controls => false, :autoplay=>true, :muted=>true, :id=>'kitvideo', :loop=>true %>
+        <%= video_tag ["DemoMainV2_webLQ.mp4","DemoMainV2_web.webm"], :controls => false, :autoplay=>true, :muted=>true, :id=>'kitvideo', :loop=>true %>
       </div>
 
     </div>
@@ -82,10 +82,9 @@
     </div>
     <div class="box" id="boxsignin">
 
-      <div class="signinpanel">
 
-        <%= render 'layouts/session' %>
-      </div>
+        <%= image_tag ("test/signin.png"), :id=>'exportdataimg'%>
+
 
       <!---->
     </div>

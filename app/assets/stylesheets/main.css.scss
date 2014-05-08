@@ -341,21 +341,17 @@ nav {
 }
 
 #closebutton {
+  background: image-url('button/close_blue.png') no-repeat;  /*Adds background-image*/
   cursor: pointer;
   width: 30px;
   height: 30px;
-  color: $color-primary;
-  font-size: 20pt;
-  text-align: center;
   position: fixed;
   top: 0px;
   right: 0px;
   z-index: 600;
   display: none;
-  background-color: #fff;
-  box-shadow: 1px 1px 4 px #000;
-  border: 8px solid $color-primary;
-  border-radius: 30px;
+  box-shadow: 2px 2px 4 px rgba(1,1,1,0.5);
+
 }
 
 .postwrapper {
