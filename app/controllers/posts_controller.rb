@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   # This is our new function that comes before Devise's one
   before_filter :authenticate_user_from_token!, except: [:show, :index]
   # This is Devise's authentication
-  before_filter :authenticate_user!, except: [:show, :index]
+  before_filter :authenticate_user!, except: [:show, :index, :new, :my, :create]
 
 
   # GET /posts
@@ -20,7 +20,8 @@ class PostsController < ApplicationController
   end
 
   def my
-    @posts = Post.where(user: current_user)
+
+    @posts = Post.where(user: current_or_guest_user)
   end
 
 
@@ -32,7 +33,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
-    @post.user = current_user
+    @post.user = current_or_guest_user
     @post.images.build
   end
 
@@ -54,7 +55,7 @@ class PostsController < ApplicationController
     @post.test_result_nitrite = post_params[:test_result_nitrite]
     #
     @post.location = post_params[:location]
-    @post.user = current_user
+    @post.user = current_or_guest_user
     respond_to do |format|
       if @post.save
         if(post_params[:images_attributes])

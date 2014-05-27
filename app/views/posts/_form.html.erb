@@ -35,6 +35,7 @@
       <%= f.label "Add pictures" ,:class =>"inputlabel" %>
       <%= f.fields_for :images do |i| %>
           <% if i.object.new_record? %>
+              //
               <%= i.file_field :file , :multiple => true%>
           <% else %>
               <div class="imagescontainer sectionwrapper">
