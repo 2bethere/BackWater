@@ -21,7 +21,10 @@ module BackWater02
     # config.i18n.default_locale = :de
     config.middleware.use ActionDispatch::Flash
 
-  begin
+    config.assets.precompile += ['homemap.js']
+
+
+    begin
       config.to_prepare do
         Devise::SessionsController.layout "session"
         Devise::RegistrationsController.layout "sign_up"
